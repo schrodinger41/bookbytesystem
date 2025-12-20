@@ -11,10 +11,10 @@ const FaqPage = () => {
         <h1>Frequently Asked Questions (FAQ)</h1>
         <p>
           Have questions? We've gathered the most common ones here to help you
-          with your shopping experience at LabuLoveTreasures. For anything else,
+          with your shopping experience at BookByte System. For anything else,
           feel free to reach out at{" "}
-          <a href="mailto:labulovetreasures@gmail.com">
-            labulovetreasures@gmail.com
+          <a href="mailto:support@bookbyte.com">
+            support@bookbyte.com
           </a>
           .
         </p>
@@ -22,18 +22,16 @@ const FaqPage = () => {
         <section>
           <h2>ABOUT US</h2>
           <p>
-            <strong>What is LabuLoveTreasures?</strong>
+            <strong>What is BookByte?</strong>
             <br />
-            LabuLoveTreasures is your trusted destination for authentic Labubu
-            collectibles. We specialize in curating rare, limited-edition
-            figures and exclusive releases straight from the heart of the Labubu
-            universe.
+            BookByte is your premier online destination for books across all genres.
+            From timeless classics to modern bestsellers, we curate a collection for every reader.
           </p>
 
           <p>
             <strong>Where are you based?</strong>
             <br />
-            <span>Head Office:</span> Arlington, VA 22203
+            <span>Head Office:</span> 123 Story Street, Bookville, BK 45678
           </p>
         </section>
 
@@ -42,7 +40,7 @@ const FaqPage = () => {
           <p>
             <strong>Where are the orders shipped from?</strong>
             <br />
-            All products are dispatched from () to ensure prompt delivery across
+            All products are dispatched from our main warehouse in Bookville to ensure prompt delivery across
             the globe.
           </p>
 
@@ -74,9 +72,10 @@ const FaqPage = () => {
             <br />
             We accept:
             <ul>
-              <li>Zelle</li>
-              <li>Venmo</li>
+              <li>Credit/Debit Cards</li>
               <li>PayPal</li>
+              <li>Apple Pay</li>
+              <li>Google Pay</li>
             </ul>
           </p>
         </section>
@@ -87,7 +86,7 @@ const FaqPage = () => {
             <strong>What data do you collect?</strong>
             <br />
             We collect necessary details like your name, contact info, shipping
-            address, and payment data.
+            address, and payment data to process your order.
           </p>
 
           <p>
@@ -103,8 +102,8 @@ const FaqPage = () => {
           <p>
             <strong>Is the site safe for kids?</strong>
             <br />
-            LabuLoveTreasures is designed for users aged 18 and up. We do not
-            knowingly collect information from minors.
+            BookByte is designed for general audiences. While we sell children's
+            books, purchases must be made by adults.
           </p>
         </section>
 
@@ -115,8 +114,8 @@ const FaqPage = () => {
             <br />
             If you need to make changes or cancel, please contact us within 24
             hours of placing your order at{" "}
-            <a href="mailto:labulovetreasures@gmail.com">
-              labulovetreasures@gmail.com
+            <a href="mailto:support@bookbyte.com">
+              support@bookbyte.com
             </a>
             .
           </p>
@@ -125,18 +124,18 @@ const FaqPage = () => {
         <section>
           <h2>CONTACT DETAILS</h2>
           <p>
-            <strong>Brand:</strong> LabuLoveTreasures
+            <strong>Brand:</strong> BookByte
             <br />
-            <strong>Office:</strong> Arlington, VA 22203
+            <strong>Office:</strong> 123 Story Street, Bookville, BK 45678
             <br />
             <strong>Business Hours:</strong> Monday–Friday, 9:00 AM to 9:00 PM
-            USA (GMT-4) Eastern Standard Time (EST)
+            USA (GMT-5) Eastern Standard Time (EST)
             <br />
-            <strong>Contact Number:</strong> 925-727-3630
+            <strong>Contact Number:</strong> +1 (555) 123-4567
             <br />
             <strong>Email:</strong>{" "}
-            <a href="mailto:labulovetreasures@gmail.com">
-              labulovetreasures@gmail.com
+            <a href="mailto:support@bookbyte.com">
+              support@bookbyte.com
             </a>
           </p>
         </section>

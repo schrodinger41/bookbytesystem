@@ -74,23 +74,25 @@ const HomePage = () => {
               "Education",
               "Fantasy",
             ].map((title, index) => {
+              // New Bento Layout Pattern
               const sizes = [
-                "large",
-                "medium",
-                "small",
-                "small",
-                "small",
-                "small",
-                "medium",
+                "medium", // Fiction (2 cols)
+                "medium", // Non-Fiction (2 cols)
+                "small",  // History (1 col)
+                "small",  // Self-Help (1 col)
+                "large",  // Business (2 cols, 2 rows)
+                "small",  // Education (1 col)
+                "small",  // Fantasy (1 col)
               ];
+
               const borderColors = [
-                "#B7CA5E",
-                "#E7D7BA",
-                "#B9BDFD",
-                "#E4E5EB",
-                "#D3DFDB",
-                "#E0F2FA",
-                "#B7CC87",
+                "#8d27ae",
+                "#0D32AB",
+                "#6a1b9a",
+                "#4a148c",
+                "#1565C0",
+                "#9c27b0",
+                "#00BCD4",
               ];
               return (
                 <a
@@ -159,7 +161,7 @@ const HomePage = () => {
                 />
                 <div className="review-content">
                   <h4 className="review-name">Michelle</h4>
-                  <p className="review-text">Fantastic and kind seller!</p>
+                  <p className="review-text">Fantastic bookstore! Found the exact edition of '1984' I was looking for.</p>
                 </div>
               </div>
             </div>
@@ -174,7 +176,7 @@ const HomePage = () => {
                 <div className="review-content">
                   <h4 className="review-name">Kyle</h4>
                   <p className="review-text">
-                    Great seller don't hesitate to do business!!
+                    Great selection and fast shipping. Highly recommend BookByte for all your reading needs!
                   </p>
                 </div>
               </div>
@@ -190,8 +192,8 @@ const HomePage = () => {
                 <div className="review-content">
                   <h4 className="review-name">Jorge</h4>
                   <p className="review-text">
-                    Very friendly and knowledgeable! Great product! Will buy
-                    again from seller
+                    Very friendly service and extensive collection. Will buy
+                    again from here.
                   </p>
                 </div>
               </div>
@@ -207,7 +209,7 @@ const HomePage = () => {
                 <div className="review-content">
                   <h4 className="review-name">Becca</h4>
                   <p className="review-text">
-                    Super nice seller! Would buy from her again 😊
+                    Super nice packaging! My books arrived in perfect condition.
                   </p>
                 </div>
               </div>
@@ -223,10 +225,7 @@ const HomePage = () => {
                 <div className="review-content">
                   <h4 className="review-name">Lufthansa</h4>
                   <p className="review-text">
-                    Picked up the "Good Luck to You" Labubu in person. Item
-                    looked just like the photos and was in great shape. Seller
-                    was easy to talk to and the whole process was quick and
-                    smooth. Appreciate it!
+                    Ordered 'Atomic Habits' and it arrived quickly. Book was in pristine condition. Smooth process.
                   </p>
                 </div>
               </div>
@@ -242,9 +241,7 @@ const HomePage = () => {
                 <div className="review-content">
                   <h4 className="review-name">Katie</h4>
                   <p className="review-text">
-                    Seller is legit! Quick at shipping and communicated the
-                    whole process with me and even asked if I received to double
-                    confirm the package came safely. Highly recommend!
+                    Legit bookstore! Quick at shipping and great communication regarding my order status.
                   </p>
                 </div>
               </div>
@@ -260,7 +257,7 @@ const HomePage = () => {
                 <div className="review-content">
                   <h4 className="review-name">Cori</h4>
                   <p className="review-text">
-                    Great seller will definitely purchase from again.
+                    Great experience, will definitely purchase more books in the future.
                   </p>
                 </div>
               </div>
@@ -276,9 +273,7 @@ const HomePage = () => {
                 <div className="review-content">
                   <h4 className="review-name">Yolanda</h4>
                   <p className="review-text">
-                    Authentic HAS Dada from Pop Mart! Seller was so transparent
-                    and so easy to work with. Would definitely recommend others
-                    to shop!
+                    Authentic editions! Seller was transparent and so easy to work with. Would definitely recommend!
                   </p>
                 </div>
               </div>
