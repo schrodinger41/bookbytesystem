@@ -1,6 +1,8 @@
 // src/pages/product/ProductPage.jsx
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../config/firebase";
 import Products from "../../components/product/Product";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
@@ -40,30 +42,87 @@ const ProductPage = () => {
   });
 
   useEffect(() => {
-    setLoading(true);
-    // Find product in static array
-    // Note: URL param id is string, Product.id is number
-    const selected = Products.find((p) => p.id === parseInt(productId));
+    const fetchProductData = async () => {
+      setLoading(true);
 
-    if (selected) {
-      setAllVariants(Products);
-      // Mock stock map for recommendations logic if needed, or just simplify
-      // Creating a simple map for compatibility
-      const stockMap = {};
-      Products.forEach(p => {
-        const priceNum = parseFloat(p.price.replace('$', ''));
-        stockMap[p.id] = { price: priceNum, stock: p.quantity };
-      });
-      setGlobalStockMap(stockMap);
+      try {
+        // Fetch Firestore data
+        const querySnapshot = await getDocs(collection(db, "Products"));
+        const firestoreMap = {};
 
-      setSelectedVariant(selected);
-      setSelectedImage(selected.image);
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          const numericId = parseInt(doc.id);
+          firestoreMap[numericId] = {
+            price: data.price,
+            quantity: data.quantity
+          };
+        });
 
-      const priceNum = parseFloat(selected.price.replace('$', ''));
-      setLiveData({ price: priceNum, stock: selected.quantity });
-    }
+        // Find product in static array
+        const selected = Products.find((p) => p.id === parseInt(productId));
 
-    setLoading(false);
+        if (selected) {
+          // Merge static products with Firestore data
+          const mergedProducts = Products.map(p => ({
+            ...p,
+            price: firestoreMap[p.id]?.price || p.price,
+            quantity: firestoreMap[p.id]?.quantity || p.quantity
+          }));
+
+          setAllVariants(mergedProducts);
+
+          // Create stock map with Firestore data
+          const stockMap = {};
+          mergedProducts.forEach(p => {
+            const priceNum = typeof p.price === 'string'
+              ? parseFloat(p.price.replace('$', ''))
+              : p.price;
+            stockMap[p.id] = { price: priceNum, stock: p.quantity };
+          });
+          setGlobalStockMap(stockMap);
+
+          // Get Firestore data for selected product
+          const firestoreProduct = firestoreMap[selected.id];
+          const mergedSelected = {
+            ...selected,
+            price: firestoreProduct?.price || selected.price,
+            quantity: firestoreProduct?.quantity || selected.quantity
+          };
+
+          setSelectedVariant(mergedSelected);
+          setSelectedImage(mergedSelected.image);
+
+          const priceNum = typeof mergedSelected.price === 'string'
+            ? parseFloat(mergedSelected.price.replace('$', ''))
+            : mergedSelected.price;
+          setLiveData({ price: priceNum, stock: mergedSelected.quantity });
+        }
+
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching Firestore data:", error);
+
+        // Fallback to static data if Firestore fails
+        const selected = Products.find((p) => p.id === parseInt(productId));
+        if (selected) {
+          setAllVariants(Products);
+          const stockMap = {};
+          Products.forEach(p => {
+            const priceNum = parseFloat(p.price.replace('$', ''));
+            stockMap[p.id] = { price: priceNum, stock: p.quantity };
+          });
+          setGlobalStockMap(stockMap);
+          setSelectedVariant(selected);
+          setSelectedImage(selected.image);
+          const priceNum = parseFloat(selected.price.replace('$', ''));
+          setLiveData({ price: priceNum, stock: selected.quantity });
+        }
+        setLoading(false);
+      }
+    };
+
+    fetchProductData();
   }, [productId]);
 
   // For books, we don't really want "variants" buttons (showing all other books in genre).

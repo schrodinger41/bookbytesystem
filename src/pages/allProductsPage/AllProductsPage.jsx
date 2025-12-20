@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../config/firebase";
 import Products from "../../components/product/Product";
 
 import Header from "../../components/header/Header";
@@ -26,6 +28,7 @@ const AllProductsPage = () => {
   const [filteredBySeries, setFilteredBySeries] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showCategories, setShowCategories] = useState(false);
+  const [firestoreData, setFirestoreData] = useState({});
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -46,14 +49,44 @@ const AllProductsPage = () => {
   }, [seriesParam, categoryParam]);
 
   useEffect(() => {
-    // Simulate loading or just set data directly
-    // Since it's local data, we could just set it, but keeping async pattern if you want loading state
-    setAllProducts(Products);
-    setIsLoading(false);
+    const fetchFirestoreData = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "Products"));
+        const firestoreMap = {};
+
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          const numericId = parseInt(doc.id);
+          firestoreMap[numericId] = {
+            price: data.price,
+            quantity: data.quantity
+          };
+        });
+
+        setFirestoreData(firestoreMap);
+
+        // Merge static product data with Firestore data
+        const mergedProducts = Products.map(product => ({
+          ...product,
+          price: firestoreMap[product.id]?.price || product.price,
+          quantity: firestoreMap[product.id]?.quantity ?? product.quantity
+        }));
+
+        setAllProducts(mergedProducts);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching Firestore data:", error);
+        // Fallback to static data if Firestore fails
+        setAllProducts(Products);
+        setIsLoading(false);
+      }
+    };
+
+    fetchFirestoreData();
   }, []);
 
   const isSeriesOutOfStock = (product) => {
-    return false; // Assuming all books are in stock as quantity logic is removed
+    return product.quantity === 0;
   };
 
   const baseFilteredProducts = getFilteredProducts(allProducts);

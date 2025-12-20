@@ -112,9 +112,11 @@ function AdminPage() {
   const filteredProducts = products.filter((product) => {
     const query = searchQuery.toLowerCase();
     return (
+      product.id?.toString().includes(query) ||
       product.name?.toLowerCase().includes(query) ||
-      product.productType?.toLowerCase().includes(query) ||
-      product.series?.toLowerCase().includes(query)
+      product.series?.toLowerCase().includes(query) ||
+      product.author?.toLowerCase().includes(query) ||
+      product.brand?.toLowerCase().includes(query)
     );
   });
 
@@ -146,7 +148,7 @@ function AdminPage() {
               <input
                 type="text"
                 className="adminPage-searchInput"
-                placeholder="Search by name, type, or series..."
+                placeholder="Search by Title, Genre, or Author..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -156,11 +158,9 @@ function AdminPage() {
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Name</th>
-                  <th>Image</th>
-                  <th>Type</th>
-                  <th>Series</th>
-                  <th>Description</th>
+                  <th>Title</th>
+                  <th>Genre</th>
+                  <th>Author</th>
                   <th>Quantity</th>
                   <th>Price</th>
                   <th>Actions</th>
@@ -179,19 +179,8 @@ function AdminPage() {
                     <tr key={id}>
                       <td>{id}</td>
                       <td>{product.name}</td>
-                      <td>
-                        <img
-                          src={product.image}
-                          alt={product.name}
-                          className="adminPage-productImg"
-                        />
-                      </td>
-                      <td>{product.productType}</td>
                       <td>{product.series}</td>
-                      <td>
-                        {product.brand}, {product.productSize},{" "}
-                        {product.material}, {product.lining}
-                      </td>
+                      <td>{product.author || product.brand}</td>
                       <td>
                         <input
                           type="number"
