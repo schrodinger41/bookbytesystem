@@ -18,7 +18,7 @@ import authenticIcon from "../../images/icon_images/authentic_icon.png";
 import responseIcon from "../../images/icon_images/response_icon.png";
 import packagingIcon from "../../images/icon_images/packaging_icon.png";
 
-import labubuFace from "../../images/labubu_face.jpg";
+import bookFace from "../../images/book_face.jpg";
 
 const HomePage = () => {
   const productCardImages = {
@@ -155,7 +155,7 @@ const HomePage = () => {
               <div className="stars">★★★★★</div>
               <div className="review-row">
                 <img
-                  src={labubuFace}
+                  src={bookFace}
                   alt="Michelle profile"
                   className="review-avatar"
                 />
@@ -169,7 +169,7 @@ const HomePage = () => {
               <div className="stars">★★★★★</div>
               <div className="review-row">
                 <img
-                  src={labubuFace}
+                  src={bookFace}
                   alt="Kyle profile"
                   className="review-avatar"
                 />
@@ -185,7 +185,7 @@ const HomePage = () => {
               <div className="stars">★★★★★</div>
               <div className="review-row">
                 <img
-                  src={labubuFace}
+                  src={bookFace}
                   alt="Jorge profile"
                   className="review-avatar"
                 />
@@ -202,7 +202,7 @@ const HomePage = () => {
               <div className="stars">★★★★★</div>
               <div className="review-row">
                 <img
-                  src={labubuFace}
+                  src={bookFace}
                   alt="Becca profile"
                   className="review-avatar"
                 />
@@ -218,7 +218,7 @@ const HomePage = () => {
               <div className="stars">★★★★★</div>
               <div className="review-row">
                 <img
-                  src={labubuFace}
+                  src={bookFace}
                   alt="Lufthansa profile"
                   className="review-avatar"
                 />
@@ -234,7 +234,7 @@ const HomePage = () => {
               <div className="stars">★★★★★</div>
               <div className="review-row">
                 <img
-                  src={labubuFace}
+                  src={bookFace}
                   alt="Katie profile"
                   className="review-avatar"
                 />
@@ -250,7 +250,7 @@ const HomePage = () => {
               <div className="stars">★★★★★</div>
               <div className="review-row">
                 <img
-                  src={labubuFace}
+                  src={bookFace}
                   alt="Cori profile"
                   className="review-avatar"
                 />
@@ -266,7 +266,7 @@ const HomePage = () => {
               <div className="stars">★★★★★</div>
               <div className="review-row">
                 <img
-                  src={labubuFace}
+                  src={bookFace}
                   alt="Yolanda profile"
                   className="review-avatar"
                 />

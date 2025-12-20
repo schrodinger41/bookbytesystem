@@ -10,11 +10,6 @@ const ThankYouPage = () => {
       <Header />
 
       <div className="thankYouPage-hero">
-        <img
-          src={labubuImg}
-          alt="Thank You Labubu"
-          className="thankYouPage-labubu"
-        />
 
         <div className="thankYouPage-messageBox">
           <h2>Your order request has been sent!</h2>
@@ -22,19 +17,6 @@ const ThankYouPage = () => {
             Kindly check your email for seller’s message within 24 hours. <br />
             Alternatively, contact them via facebook/email.
           </p>
-
-          <div className="thankYouPage-icons">
-            <a
-              href="https://www.facebook.com/marketplace/profile/100003786026066/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i className="fab fa-facebook-f"></i>
-            </a>
-            <a href="mailto:labulovetreasures@gmail.com">
-              <i className="fas fa-envelope"></i>
-            </a>
-          </div>
 
           <button
             className="thankYouPage-button"

@@ -120,7 +120,7 @@ const ProductPage = () => {
       [filtered[i], filtered[j]] = [filtered[j], filtered[i]];
     }
 
-    return filtered.slice(0, 4);
+    return filtered.slice(0, 5);
   }, [allVariants, selectedVariant, globalStockMap]);
 
   if (loading || !selectedVariant) {

@@ -14,8 +14,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("../../images/bg_images/bg_image_13.png") no-repeat center
-    center;
+  background: url("../../images/bg_images/bg_image_13.png") no-repeat center center;
   background-size: cover;
   z-index: -2;
 }
@@ -27,7 +26,8 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4); /* semi-transparent black */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* semi-transparent black */
   z-index: -1;
 }
 
@@ -49,7 +49,6 @@
   max-width: 600px;
   width: 100%;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  margin-top: 100px; /* push the whole box down */
   z-index: 1;
 }
 
@@ -65,7 +64,7 @@
 }
 
 .thankYouPage-messageBox h2 {
-  color: #ff7a7a;
+  color: var(--primary-color);
   font-size: 1.75rem;
   font-weight: bold;
   margin-bottom: 1rem;
@@ -85,17 +84,9 @@
   margin-bottom: 1.5rem;
 }
 
-.thankYouPage-icons a {
-  color: #333;
-  transition: color 0.3s ease;
-}
-
-.thankYouPage-icons a:hover {
-  color: #ff7a7a;
-}
 
 .thankYouPage-button {
-  background-color: #3a2e2e;
+  background-color: black;
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -106,7 +97,7 @@
 }
 
 .thankYouPage-button:hover {
-  background-color: #2a1f1f;
+  background-color: var(--secondary-color);
 }
 
 @media (max-width: 480px) {

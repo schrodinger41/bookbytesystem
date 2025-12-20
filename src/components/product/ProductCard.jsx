@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import fallbackImage from "../../images/labubu_face.jpg";
+import fallbackImage from "../../images/book_face.jpg";
 import "./productCard.css";
 
 const ProductCard = ({
