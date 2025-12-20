@@ -64,7 +64,8 @@ const HomePage = () => {
           <div className="slideshow-overlay"></div>
           <div className="slideshow-content">
             <h4>Welcome to</h4>
-            <h1>Labulovetreasures</h1>
+            <h1>BookByte</h1>
+            <h4 className='text fs-17'>Welcome to BookByte, your premier destination for discovering and exploring your next favorite book! BookByte is a streamlined platform dedicated to helping you find and learn more about the books you love, all in one convenient place.</h4>
             <a href="/ProductCatalogue" className="shop-now-btn">
               Shop Now
             </a>
