@@ -181,9 +181,7 @@ const ProductPage = () => {
 
         <div className="productpage-details">
           <h2>
-            {selectedVariant.productName} – {selectedVariant.series}
-            <br />
-            <span className="variant-name">{selectedVariant.name}</span>
+            {selectedVariant.productName}
           </h2>
           <p className="productpage-price">
             {`$${liveData.price?.toFixed(2)}`}

@@ -50,7 +50,6 @@ const ProductCard = ({
       <div className="productcard-details">
         <p className="productcard-title">
           {productName || "Unnamed"}
-          {series ? ` - ${series}` : ""}
         </p>
         <p className="productcard-price">{price}</p>
       </div>
