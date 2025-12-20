@@ -136,36 +136,7 @@ const ProductPage = () => {
     <div>
       <Header />
       <div className="productpage-container">
-        <div className="productpage-gallery">
-          <button className="gallery-arrow" onClick={() => scrollGallery("up")}>
-            ▲
-          </button>
 
-          <div className="productpage-thumbnails" ref={galleryRef}>
-            {Array.from(
-              new Set([selectedVariant.image, selectedVariant.imageBack].filter(Boolean))
-            ).map((img, i) => (
-              <img
-                key={i}
-                src={img}
-                onClick={() => setSelectedImage(img)}
-                className={
-                  selectedImage === img
-                    ? "thumbnail-img active"
-                    : "thumbnail-img"
-                }
-                alt={`thumb ${i}`}
-              />
-            ))}
-          </div>
-
-          <button
-            className="gallery-arrow"
-            onClick={() => scrollGallery("down")}
-          >
-            ▼
-          </button>
-        </div>
 
         <div className="productpage-main-image-container">
           {selectedImage ? (

@@ -23,7 +23,7 @@ function Header() {
           >
             <HiOutlineMenuAlt3
               size={35}
-              style={{ color: `${toggleMenu ? "#F4999E" : "#F4999E"}` }}
+              style={{ color: `${toggleMenu ? "white" : "white"}` }}
             />
           </button>
         </div>

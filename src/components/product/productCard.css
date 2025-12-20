@@ -1,5 +1,5 @@
 .productcard-wrapper {
-  border-radius: 10px;
+  border-radius: 5px;
   overflow: hidden;
   background: #fff;
   transition: transform 0.3s ease, border-color 0.3s ease;
@@ -11,7 +11,8 @@
 
 .productcard-wrapper:hover {
   cursor: pointer;
-  border-color: #cacaca;
+  border: 3px solid var(--primary-color);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 /* Image container that handles both front and back image */
@@ -31,7 +32,6 @@
   height: 100%;
   object-fit: cover;
   transition: 0.5s ease;
-  border-radius: 10px;
 }
 
 /* Z-index and default opacity for front image */
@@ -40,20 +40,11 @@
   opacity: 1;
 }
 
-/* Z-index and default opacity for back image (initially hidden) */
 .productcard-image.back {
   z-index: 0;
   opacity: 0;
 }
 
-/* On hover, fade out front and fade in back */
-.productcard-image-container:hover .productcard-image.front {
-  opacity: 0;
-}
-
-.productcard-image-container:hover .productcard-image.back {
-  opacity: 1;
-}
 
 /* Optional badge styling */
 .productcard-badge {
