@@ -104,7 +104,7 @@
 .contactuspage-button {
   margin-top: 1rem;
   padding: 12px 24px;
-  background-color: #ffafcc;
+  background-color: black;
   border: none;
   border-radius: 8px;
   color: white;
@@ -115,7 +115,7 @@
 }
 
 .contactuspage-button:hover {
-  background-color: #ff80b5;
+  background-color: var(--secondary-color);
 }
 
 @media (max-width: 768px) {

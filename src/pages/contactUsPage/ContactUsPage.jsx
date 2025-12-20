@@ -17,15 +17,15 @@ const ContactUsPage = () => {
             <div className="contactuspage-form-wrapper">
               <form className="contactuspage-form">
                 <div className="contactuspage-form-group">
-                  <label>Your adorable first name</label>
+                  <label>First name</label>
                   <input
                     type="text"
-                    placeholder="Enter your cute first name"
+                    placeholder="Enter your first name"
                     className="contactuspage-input"
                   />
                 </div>
                 <div className="contactuspage-form-group">
-                  <label>Your magical email address</label>
+                  <label>Email address</label>
                   <input
                     type="email"
                     placeholder="Enter your email address"
@@ -33,9 +33,9 @@ const ContactUsPage = () => {
                   />
                 </div>
                 <div className="contactuspage-form-group">
-                  <label>Your sweet message for us</label>
+                  <label>Message</label>
                   <textarea
-                    placeholder="Type your lovely message"
+                    placeholder="Type your message"
                     className="contactuspage-textarea"
                   ></textarea>
                 </div>
