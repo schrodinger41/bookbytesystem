@@ -184,9 +184,13 @@ const ProductPage = () => {
 
   if (loading || !selectedVariant) {
     return (
-      <div className="loading-container-product-page">
-        <img src={loadingGif} alt="Loading..." className="loading-gif" />
-        <p className="loading-text">Loading products...</p>
+      <div>
+        <Header />
+        <div className="loading-container-product-page">
+          <img src={loadingGif} alt="Loading..." className="loading-gif" />
+          <p className="loading-text">Loading products...</p>
+        </div>
+        <Footer />
       </div>
     );
   }
