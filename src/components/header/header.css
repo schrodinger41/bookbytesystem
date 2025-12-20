@@ -1,10 +1,10 @@
 .navbar {
-  padding: 1rem 0;
+  padding: 1rem 0.5rem;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
     rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
   position: fixed;
   width: 100%;
-  background-color: white;
+  background-color: black;
   z-index: 10000;
 }
 
@@ -14,24 +14,28 @@
 
 .logo-img {
   height: 100%;
-  border-radius: 100%;
+  padding: 0;
 }
 
 .navbar-brand span {
   margin-left: 2rem;
 }
+
 .brand-and-toggler {
   width: 100%;
 }
+
 .navbar-content {
   display: flex;
   width: 100%;
 }
+
 .navbar-toggler-btn {
   transition: all 300ms ease-in-out;
   z-index: 11;
   color: white;
 }
+
 .navbar-collapse {
   position: fixed;
   right: 0;
@@ -45,45 +49,56 @@
   transform: translatex(100%);
   transition: all 300ms ease-in-out;
 }
+
 .show-navbar-collapse {
   transform: translateX(0);
 }
+
 .nav-item {
   margin-bottom: 1.4rem;
   font-family: var(--main-font);
 }
+
 .nav-link svg {
   vertical-align: middle;
 }
+
 .nav-link {
   transition: all 300ms ease-in-out;
   font-size: 1.5rem;
-  color: black;
+  color: white;
   font-weight: var(--weight-600);
   letter-spacing: 1px;
   font-family: var(--main-font);
 }
+
 .nav-link:hover {
   /* color: white; */
   font-weight: 700;
   cursor: pointer;
 }
+
 .flex {
   display: flex;
   align-items: center;
 }
+
 .flex-column {
   flex-direction: column;
 }
+
 .flex-sb {
   justify-content: space-between;
 }
+
 .flex-c {
   justify-content: center;
 }
+
 .grid {
   display: grid;
 }
+
 .container {
   margin: 0 auto;
   padding: 0 2rem;
@@ -98,7 +113,7 @@ button {
 }
 
 img {
-  width: 100%;
+  width: 90%;
   display: block;
 }
 
@@ -112,17 +127,26 @@ img {
     transform: translateX(0);
     justify-content: flex-end;
   }
+
+  .logo-img {
+    height: 70%;
+    padding: 1rem 0.5rem;
+  }
+
   .navbar-toggler-btn {
     display: none;
   }
+
   .nav-item {
     margin-bottom: 0;
     margin-left: 2.8rem;
   }
+
   .nav-link {
     font-size: var(--normal-font-size);
     font-weight: 700 !important;
   }
+
   .navbar-nav {
     display: flex;
   }
@@ -138,6 +162,7 @@ img {
   .navbar-brand {
     width: 100px;
   }
+
   .nav-link:hover {
     color: var(--secondary-color);
     font-weight: 700;

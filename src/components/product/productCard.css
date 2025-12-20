@@ -2,18 +2,23 @@
   border-radius: 10px;
   overflow: hidden;
   background: #fff;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+  height: 100%;
+  border: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
 }
 
 .productcard-wrapper:hover {
   cursor: pointer;
+  border-color: #cacaca;
 }
 
 /* Image container that handles both front and back image */
 .productcard-image-container {
   position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 2 / 3;
   overflow: hidden;
 }
 
@@ -72,8 +77,12 @@
 
 /* Product details section */
 .productcard-details {
-  padding: 0 0 15px;
+  padding: 0 0.5rem 15px;
   text-align: left;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 /* Main title: type and series */

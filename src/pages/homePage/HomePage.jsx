@@ -1,26 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import "./homePage.css";
 
 // Static imports for slideshow background
 import bgImage1 from "../../images/bg_images/bg_image_1.png";
-import bgImage9 from "../../images/bg_images/bg_image_9.jpg";
-import bgImage2 from "../../images/bg_images/bg_image_2.jpg";
-
-// Static imports for cards and preview images
-import bgImage11 from "../../images/bg_images/bg_image_11.png";
-import bgImage12 from "../../images/bg_images/bg_image_12.png";
-import bgImage5 from "../../images/bg_images/bg_image_5.png";
-import bgImage6 from "../../images/bg_images/bg_image_6.png";
-import bgImage10 from "../../images/bg_images/bg_image_10.jpg";
-import bgImage7 from "../../images/bg_images/bg_image_7.png";
-import bgImage8 from "../../images/bg_images/bg_image_8.png";
-
-import lycheePreview from "../../images/product_previews/lychee_bundle_preview.png";
-import dadaPreview from "../../images/product_previews/dada_bundle_preview.png";
-import macaronSecret from "../../images/product_previews/exciting_macaron_secret_preview.png";
-import impressionnismeSecret from "../../images/product_previews/l'impressionnisme_secret_preview.png";
+import fictionImg from "../../images/product_images/FICTION - 1984.jpg";
+import nonFictionImg from "../../images/product_images/Non-Fiction - Sapiens A Brief History of Humankind.jpg";
+import historyImg from "../../images/product_images/History - The History of the Philippines.jpg";
+import selfHelpImg from "../../images/product_images/Self-Help - Atomic Habits.jpg";
+import businessImg from "../../images/product_images/Business - Rich Dad Poor Dad.jpg";
+import eduImg from "../../images/product_images/Education - Oxford English Dictionary.jpg";
+import fantasyImg from "../../images/product_images/Fantasy - Harry Potter and the Sorcerers Stone.jpg";
 
 import deliveryIcon from "../../images/icon_images/delivery_icon.png";
 import authenticIcon from "../../images/icon_images/authentic_icon.png";
@@ -29,28 +20,15 @@ import packagingIcon from "../../images/icon_images/packaging_icon.png";
 
 import labubuFace from "../../images/labubu_face.jpg";
 
-const bgImages = [bgImage1, bgImage9, bgImage2];
-
 const HomePage = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % bgImages.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
-
   const productCardImages = {
-    "Exciting Macaron": bgImage9,
-    "Have A Seat": bgImage2,
-    "Big Into Energy": bgImage11,
-    "Coca-Cola Series": bgImage12,
-    Zimomo: bgImage5,
-    Mokoko: bgImage6,
-    "Special Pendants": bgImage10,
-    "L'impressionnisme": bgImage7,
-    "Winter Symphony": bgImage8,
+    "Fiction": fictionImg,
+    "Non-Fiction": nonFictionImg,
+    "History": historyImg,
+    "Self-Help": selfHelpImg,
+    "Business": businessImg,
+    "Education": eduImg,
+    "Fantasy": fantasyImg,
   };
 
   return (
@@ -59,46 +37,42 @@ const HomePage = () => {
       <div className="home-content">
         <div
           className="slideshow-background"
-          style={{ backgroundImage: `url(${bgImages[currentIndex]})` }}
+          style={{ backgroundImage: `linear-gradient(rgba(205, 10, 114, 0.7), rgba(37, 7, 146, 0.8)), url(${bgImage1})` }}
         >
           <div className="slideshow-overlay"></div>
           <div className="slideshow-content">
             <h4>Welcome to</h4>
             <h1>BookByte</h1>
-            <h4 className='text fs-17'>Welcome to BookByte, your premier destination for discovering and exploring your next favorite book! BookByte is a streamlined platform dedicated to helping you find and learn more about the books you love, all in one convenient place.</h4>
+            <h4 className='desc'>Welcome to BookByte, your premier destination for discovering and exploring your next favorite book!</h4>
             <a href="/ProductCatalogue" className="shop-now-btn">
               Shop Now
             </a>
           </div>
-          <div className="carousel-dots">
-            {bgImages.map((_, index) => (
-              <span
-                key={index}
-                className={`dot ${currentIndex === index ? "active" : ""}`}
-              ></span>
-            ))}
-          </div>
         </div>
 
-        {/* LABUBU PRODUCTS */}
         <div className="products-section">
-          <h2 className="product-title">LABUBU PRODUCTS</h2>
+          <h2 className="product-title">BOOK GENRES</h2>
           <p className="product-description">
-            Labubu is a popular, mischievous-looking, elf-like toy character
-            with high, pointed ears, jagged teeth, and a round, furry body,
-            known for its playful yet slightly fierce expression. It's a
-            character in the "The Monsters" series, created by artist Kasing
-            Lung.
+            Dive into a world of knowledge, imagination, and adventure with our
+            carefully curated collection of book genres. Whether you love the
+            gripping stories of Fiction, the insightful lessons of Non-Fiction,
+            or the epic journeys of Fantasy & Science Fiction, our library has
+            something for everyone. Explore the rich history of civilizations,
+            gain practical wisdom through Self-Help & Personal Development, learn
+            the secrets of business and economics, or discover essential insights
+            from Education & Reference materials. Each genre opens doors to new
+            ideas, unforgettable characters, and valuable life lessons, making
+            reading an exciting and enriching experience for readers of all ages.
           </p>
           <div className="product-grid">
             {[
-              "Exciting Macaron",
-              "Have A Seat",
-              "Big Into Energy",
-              "Coca-Cola Series",
-              "Zimomo",
-              "Mokoko",
-              "Special Pendants",
+              "Fiction",
+              "Non-Fiction",
+              "History",
+              "Self-Help",
+              "Business",
+              "Education",
+              "Fantasy",
             ].map((title, index) => {
               const sizes = [
                 "large",
@@ -140,104 +114,7 @@ const HomePage = () => {
           </div>
         </div>
 
-        {/* BUNDLE PREVIEWS */}
-        <div className="product-preview-section">
-          <h2 className="product-preview-title">BUNDLE PRICES</h2>
-          <div className="product-preview-cards">
-            <div className="product-preview-card">
-              <img
-                src={lycheePreview}
-                alt="Bundle 1"
-                className="product-preview-image"
-              />
-              <p className="product-preview-description">
-                Lychee Berry + (Soymilk/Sesame Bean/Green Grape/Toffee/Seasalt
-                Coconut)
-              </p>
-              <p className="product-preview-price">$105.00</p>
-            </div>
-            <div className="product-preview-card">
-              <img
-                src={dadaPreview}
-                alt="Bundle 2"
-                className="product-preview-image"
-              />
-              <p className="product-preview-description">
-                Dada + (Baba/Ququ/Hehe/Zizi/Sisi)
-              </p>
-              <p className="product-preview-price">$90.00</p>
-            </div>
-          </div>
-          <a
-            href="/ProductCatalogue?category=Bundle%20Prices"
-            className="view-all-btn"
-          >
-            View All
-          </a>
-        </div>
 
-        {/* SKULLPANDA PRODUCTS */}
-        <div className="products-section">
-          <h2 className="product-title">SKULLPANDA PRODUCTS</h2>
-          <p className="product-description">
-            Skullpanda is a popular art toy series created by Chinese artist
-            Xiong Mao and produced by Pop Mart. It features a mysterious,
-            traveling symbiote character known for its skull-shaped helmet and
-            dreamy appearance.
-          </p>
-          <div className="product-grid">
-            {["L'impressionnisme", "Winter Symphony"].map((title, index) => (
-              <a
-                key={index}
-                href={`/ProductCatalogue?series=${encodeURIComponent(title)}`}
-                className="product-card large"
-                style={{
-                  backgroundImage: `url(${productCardImages[title]})`,
-                  border: `2px solid ${["#B7CA5E", "#E7D7BA"][index]}`,
-                  textDecoration: "none",
-                  color: "inherit",
-                }}
-              >
-                <div className="card-overlay">
-                  <h3>{title}</h3>
-                  <span className="view-all">View All</span>
-                </div>
-              </a>
-            ))}
-          </div>
-        </div>
-
-        {/* SECRETS SECTION */}
-        <div className="product-preview-section-two">
-          <h2 className="product-preview-title">SECRETS</h2>
-          <div className="product-preview-cards">
-            <div className="product-preview-card">
-              <img
-                src={macaronSecret}
-                alt="Secret 1"
-                className="product-preview-image"
-              />
-              <p className="product-preview-description">
-                EXISTING MACARON - Chestnut Cocoa
-              </p>
-              <p className="product-preview-price">$194.00</p>
-            </div>
-            <div className="product-preview-card">
-              <img
-                src={impressionnismeSecret}
-                alt="Secret 2"
-                className="product-preview-image"
-              />
-              <p className="product-preview-description">
-                L'IMPRESSIONNISME - In The Garden
-              </p>
-              <p className="product-preview-price">$294.00</p>
-            </div>
-          </div>
-          <a href="/ProductCatalogue?category=Secrets" className="view-all-btn">
-            View All
-          </a>
-        </div>
 
         {/* SHOP BADGES */}
         <div className="shop-badges-section">

@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { getDocs, collection } from "firebase/firestore";
-import { db } from "../../config/firebase";
+import Products from "../../components/product/Product";
 
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import ProductCard from "../../components/product/ProductCard";
-
-import imageMap from "../../components/product/ImageMap";
 
 import bannerImage from "../../images/bg_images/bg_image_4.png";
 import loadingGif from "../../images/loading.gif";
@@ -16,49 +13,11 @@ import emptyIcon from "../../images/icon_images/empty_icon.jpg";
 import "./allProductsPage.css";
 
 const getFilteredProducts = (products) => {
-  const seenTypeSeries = new Set();
-  const filtered = [];
-
-  products.forEach((product) => {
-    const nameLower = (product.name || "").toLowerCase();
-
-    const isWholeSet = nameLower.includes("whole set");
-
-    if (isWholeSet) {
-      filtered.push(product);
-    } else {
-      const key = `${product.type}|${product.series}`;
-      if (!seenTypeSeries.has(key)) {
-        seenTypeSeries.add(key);
-        filtered.push(product);
-      }
-    }
-  });
-
-  return filtered;
+  return products;
 };
 
-const getPriceRange = (product, allProducts) => {
-  const related = allProducts.filter(
-    (p) =>
-      p.series === product.series &&
-      p.type === product.type &&
-      (p.name?.toLowerCase().includes("whole set") ||
-        !p.name?.toLowerCase().includes("whole set"))
-  );
-
-  const prices = related
-    .map((p) => parseFloat(p.price))
-    .filter((price) => !isNaN(price));
-
-  if (prices.length === 0) return "$0.00";
-
-  const min = Math.min(...prices);
-  const max = Math.max(...prices);
-
-  return min === max
-    ? `$${min.toFixed(2)}`
-    : `$${min.toFixed(2)} - $${max.toFixed(2)}`;
+const getPriceRange = (product) => {
+  return product.price;
 };
 
 const AllProductsPage = () => {
@@ -87,74 +46,23 @@ const AllProductsPage = () => {
   }, [seriesParam, categoryParam]);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const snapshot = await getDocs(collection(db, "Products"));
-        const products = [];
-
-        snapshot.forEach((doc) => {
-          const data = doc.data();
-          products.push({
-            id: doc.id,
-            ...data,
-            image: imageMap[data.imageKey],
-            imageBack: imageMap[data.imageBackKey],
-          });
-        });
-
-        products.sort((a, b) => parseInt(a.id) - parseInt(b.id));
-
-        setAllProducts(products);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchProducts();
+    // Simulate loading or just set data directly
+    // Since it's local data, we could just set it, but keeping async pattern if you want loading state
+    setAllProducts(Products);
+    setIsLoading(false);
   }, []);
 
   const isSeriesOutOfStock = (product) => {
-    const related = allProducts.filter(
-      (p) =>
-        p.series === product.series &&
-        p.type === product.type &&
-        (p.name?.toLowerCase().includes("whole set") ||
-          !p.name?.toLowerCase().includes("whole set"))
-    );
-
-    return related.every((p) => p.quantity === 0 || p.quantity === undefined);
+    return false; // Assuming all books are in stock as quantity logic is removed
   };
 
   const baseFilteredProducts = getFilteredProducts(allProducts);
 
   const filterByCategory = (products) => {
-    switch (selectedCategory) {
-      case "Labubu":
-        return products.filter(
-          (p) => p.productType?.toLowerCase() === "labubu"
-        );
-      case "Skullpanda":
-        return products.filter(
-          (p) => p.productType?.toLowerCase() === "skullpanda"
-        );
-      case "Secrets":
-        return products.filter((p) => p.type?.toLowerCase() === "secret");
-      case "Bundle Prices":
-        return products.filter((p) =>
-          p.series?.toLowerCase().includes("bundle")
-        );
-      case "Others":
-        return products.filter(
-          (p) =>
-            p.productType?.toLowerCase() !== "labubu" &&
-            p.productType?.toLowerCase() !== "skullpanda" &&
-            p.type?.toLowerCase() !== "secret"
-        );
-      default:
-        return products;
+    if (selectedCategory === "All Products") {
+      return products;
     }
+    return products.filter((p) => p.type === selectedCategory);
   };
 
   const filteredProducts = filterByCategory(baseFilteredProducts).filter((p) =>
@@ -163,11 +71,13 @@ const AllProductsPage = () => {
 
   const categories = [
     "All Products",
-    "Labubu",
-    "Skullpanda",
-    "Bundle Prices",
-    "Secrets",
-    "Others",
+    "Fiction",
+    "Non-Fiction",
+    "History",
+    "Self-Help",
+    "Business",
+    "Education",
+    "Fantasy",
   ];
 
   return (
@@ -182,18 +92,16 @@ const AllProductsPage = () => {
         </div>
 
         <div
-          className={`allproducts-categories-animated-wrapper ${
-            showCategories ? "expanded" : ""
-          }`}
+          className={`allproducts-categories-animated-wrapper ${showCategories ? "expanded" : ""
+            }`}
         >
           <div className="allproducts-categories-bar">
             <ul className="allproducts-categories-list">
               {categories.map((category) => (
                 <li
                   key={category}
-                  className={`allproducts-category ${
-                    selectedCategory === category ? "active" : ""
-                  }`}
+                  className={`allproducts-category ${selectedCategory === category ? "active" : ""
+                    }`}
                   onClick={() => {
                     setSelectedCategory(category);
                     setFilteredBySeries(null);

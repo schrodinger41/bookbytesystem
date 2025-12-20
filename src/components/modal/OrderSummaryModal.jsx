@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import emailjs from "@emailjs/browser";
+// import emailjs from "@emailjs/browser";
 import { useNavigate } from "react-router-dom";
 import "./orderSummaryModal.css";
 
@@ -62,12 +62,12 @@ const OrderSummaryModal = ({ cartItems, total, onClose }) => {
     };
 
     try {
-      await emailjs.send(
-        "service_p2844i9",
-        "template_n84rydj",
-        templateParams,
-        "PZNj6YlIY3YN199g_"
-      );
+      // await emailjs.send(
+      //   "service_p2844i9",
+      //   "template_n84rydj",
+      //   templateParams,
+      //   "PZNj6YlIY3YN199g_"
+      // );
       localStorage.removeItem("cart");
       navigate("/ThankYou");
     } catch (err) {

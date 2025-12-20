@@ -1,8 +1,7 @@
 // src/pages/product/ProductPage.jsx
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../config/firebase";
+import Products from "../../components/product/Product";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import ProductCard from "../../components/product/ProductCard";
@@ -13,19 +12,11 @@ import loadingGif from "../../images/loading.gif";
 import "./productsPage.css";
 import "../allProductsPage/allProductsPage.css";
 
-const getPriceRange = (variants, globalStockMap) => {
-  const prices = variants
-    .map((v) => {
-      const data = globalStockMap[v.id];
-      return data?.price ?? null;
-    })
-    .filter((p) => p !== null && !isNaN(p));
-
-  if (prices.length === 0) return "$0.00";
-  const [min, max] = [Math.min(...prices), Math.max(...prices)];
-  return min === max
-    ? `$${min.toFixed(2)}`
-    : `$${min.toFixed(2)} - $${max.toFixed(2)}`;
+const getPriceRange = (variants) => {
+  if (!variants || variants.length === 0) return "$0.00";
+  // For books, just return the price of the items (assuming items are similar or just showing range of genre)
+  // Simplified for this use case to just show price
+  return variants[0]?.price || "$0.00";
 };
 
 const ProductPage = () => {
@@ -49,54 +40,37 @@ const ProductPage = () => {
   });
 
   useEffect(() => {
-    const fetchAll = async () => {
-      setLoading(true);
-      const snapshot = await getDocs(collection(db, "Products"));
-      const variants = [];
+    setLoading(true);
+    // Find product in static array
+    // Note: URL param id is string, Product.id is number
+    const selected = Products.find((p) => p.id === parseInt(productId));
+
+    if (selected) {
+      setAllVariants(Products);
+      // Mock stock map for recommendations logic if needed, or just simplify
+      // Creating a simple map for compatibility
       const stockMap = {};
-
-      snapshot.forEach((docSnap) => {
-        const d = docSnap.data();
-        const variant = {
-          id: docSnap.id,
-          name: d.name,
-          series: d.series,
-          type: d.type,
-          productName: d.productName,
-          brand: d.brand,
-          productSize: d.productSize,
-          material: d.material,
-          lining: d.lining,
-          image: imageMap[d.imageKey] || "",
-          imageBack: imageMap[d.imageBackKey] || null,
-        };
-        variants.push(variant);
-        stockMap[variant.id] = { price: d.price, stock: d.quantity };
+      Products.forEach(p => {
+        const priceNum = parseFloat(p.price.replace('$', ''));
+        stockMap[p.id] = { price: priceNum, stock: p.quantity };
       });
-
-      setAllVariants(variants);
-
       setGlobalStockMap(stockMap);
 
-      const selected = variants.find((v) => v.id === productId);
-      if (selected) {
-        setSelectedVariant(selected);
-        setSelectedImage(selected.image);
-        setLiveData(stockMap[selected.id]);
-      }
+      setSelectedVariant(selected);
+      setSelectedImage(selected.image);
 
-      setLoading(false);
-    };
+      const priceNum = parseFloat(selected.price.replace('$', ''));
+      setLiveData({ price: priceNum, stock: selected.quantity });
+    }
 
-    fetchAll();
+    setLoading(false);
   }, [productId]);
 
-  const variants = allVariants.filter(
-    (v) =>
-      v.series === selectedVariant?.series && v.type === selectedVariant?.type
-  );
+  // For books, we don't really want "variants" buttons (showing all other books in genre).
+  // So let's just make this empty or filtered to self.
+  const variants = [];
 
-  const isWholeSet = selectedVariant?.name.toLowerCase().includes("whole set");
+  const isWholeSet = false;
 
   const handleQuantityChange = (delta) => {
     setQuantity((prev) => {
@@ -136,7 +110,7 @@ const ProductPage = () => {
         seenTypeSeries.add(key);
         filtered.push({
           ...v,
-          price: getPriceRange(groupVariants, globalStockMap),
+          price: v.price, // getPriceRange(groupVariants, globalStockMap),
         });
       }
     });
@@ -169,7 +143,7 @@ const ProductPage = () => {
 
           <div className="productpage-thumbnails" ref={galleryRef}>
             {Array.from(
-              new Set([selectedVariant.image, ...variants.map((v) => v.image)])
+              new Set([selectedVariant.image, selectedVariant.imageBack].filter(Boolean))
             ).map((img, i) => (
               <img
                 key={i}
@@ -224,9 +198,8 @@ const ProductPage = () => {
                   <button
                     key={v.id}
                     disabled={isDisabled}
-                    className={`variant-button ${
-                      selectedVariant.id === v.id ? "selected" : ""
-                    }`}
+                    className={`variant-button ${selectedVariant.id === v.id ? "selected" : ""
+                      }`}
                     onClick={() => {
                       setSelectedVariant(v);
                       setSelectedImage(v.image);
@@ -290,13 +263,17 @@ const ProductPage = () => {
           </button>
 
           <div className="productpage-info">
-            {["Brand", "Product Size", "Material", "Lining"].map((field) => (
+            <p className="product-synopsis" style={{ marginBottom: "1rem", lineHeight: "1.6" }}>
+              <strong>Synopsis:</strong> <br />
+              {selectedVariant.synopsis}
+            </p>
+
+            {["Author", "Pages", "Language", "Type"].map((field) => (
               <p key={field}>
                 <strong>{field}:</strong>{" "}
                 {
                   selectedVariant[
-                    field.replace(" ", "").charAt(0).toLowerCase() +
-                      field.replace(" ", "").slice(1)
+                  field.toLowerCase()
                   ]
                 }
               </p>

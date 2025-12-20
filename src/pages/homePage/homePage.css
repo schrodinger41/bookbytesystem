@@ -40,10 +40,18 @@
   font-family: var(--main-font);
 }
 
+.slideshow-content .desc {
+  font-size: var(--normal-font-size);
+  font-weight: var(--font-weight-500);
+  font-family: var(--main-font);
+  margin-bottom: 2rem;
+  margin-right: 4rem;
+  margin-left: 4rem;
+}
+
 .slideshow-content h1 {
   font-size: 5rem;
   font-weight: var(--font-weight-700);
-  margin-bottom: 5rem;
   font-family: var(--main-font);
 }
 
@@ -152,7 +160,7 @@
 .card-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.8);
   color: white;
   display: flex;
   flex-direction: column;
@@ -186,7 +194,8 @@
 /*PRODUCT-PREVIEW-SECTION*/
 .product-preview-section {
   padding: 4rem 2rem;
-  background-image: url("/src/images/bg_images/bg_image_13.png"); /* optional background */
+  background-image: url("/src/images/bg_images/bg_image_13.png");
+  /* optional background */
   background-size: cover;
   background-position: center;
   text-align: center;
@@ -196,7 +205,8 @@
 
 .product-preview-section-two {
   padding: 4rem 2rem;
-  background-image: url("/src/images/bg_images/bg_image_4.png"); /* optional background */
+  background-image: url("/src/images/bg_images/bg_image_4.png");
+  /* optional background */
   background-size: cover;
   background-position: center;
   text-align: center;
@@ -254,12 +264,14 @@
   text-align: center;
   color: black;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  margin-top: 12rem; /* creates space for the floating image */
+  margin-top: 12rem;
+  /* creates space for the floating image */
 }
 
 .product-preview-image {
   position: absolute;
-  top: -200px; /* lifts image above the card */
+  top: -200px;
+  /* lifts image above the card */
   left: 50%;
   transform: translateX(-50%);
   width: 20rem;
@@ -274,11 +286,13 @@
   font-weight: var(--font-weight-600);
   margin-bottom: 1rem;
   text-align: center;
-  min-height: 3.5rem; /* force a consistent height, tweak as needed */
+  min-height: 3.5rem;
+  /* force a consistent height, tweak as needed */
   display: flex;
   align-items: center;
   justify-content: center;
-  text-wrap: balance; /* optional: makes line breaks neater */
+  text-wrap: balance;
+  /* optional: makes line breaks neater */
 }
 
 .product-preview-price {
@@ -395,7 +409,8 @@
 .review-row {
   display: flex;
   gap: 1.2rem;
-  align-items: flex-start; /* key fix: no vertical centering */
+  align-items: flex-start;
+  /* key fix: no vertical centering */
 }
 
 .review-avatar {
@@ -433,7 +448,8 @@
 
 @media (max-width: 768px) {
   .slideshow-background {
-    height: 80vh; /* shorter for mobile */
+    height: 80vh;
+    /* shorter for mobile */
     background-position: center;
   }
 
@@ -468,6 +484,7 @@
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
   }
+
   .card-overlay {
     opacity: 1;
   }
