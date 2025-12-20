@@ -1,0 +1,146 @@
+.navbar {
+  padding: 1rem 0;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+  position: fixed;
+  width: 100%;
+  background-color: white;
+  z-index: 10000;
+}
+
+.navbar-brand {
+  width: 40px;
+}
+
+.logo-img {
+  height: 100%;
+  border-radius: 100%;
+}
+
+.navbar-brand span {
+  margin-left: 2rem;
+}
+.brand-and-toggler {
+  width: 100%;
+}
+.navbar-content {
+  display: flex;
+  width: 100%;
+}
+.navbar-toggler-btn {
+  transition: all 300ms ease-in-out;
+  z-index: 11;
+  color: white;
+}
+.navbar-collapse {
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 10;
+  background-color: white;
+  height: 100%;
+  width: 280px;
+  display: flex;
+  padding: 10rem 3rem 0 3rem;
+  transform: translatex(100%);
+  transition: all 300ms ease-in-out;
+}
+.show-navbar-collapse {
+  transform: translateX(0);
+}
+.nav-item {
+  margin-bottom: 1.4rem;
+  font-family: var(--main-font);
+}
+.nav-link svg {
+  vertical-align: middle;
+}
+.nav-link {
+  transition: all 300ms ease-in-out;
+  font-size: 1.5rem;
+  color: black;
+  font-weight: var(--weight-600);
+  letter-spacing: 1px;
+  font-family: var(--main-font);
+}
+.nav-link:hover {
+  /* color: white; */
+  font-weight: 700;
+  cursor: pointer;
+}
+.flex {
+  display: flex;
+  align-items: center;
+}
+.flex-column {
+  flex-direction: column;
+}
+.flex-sb {
+  justify-content: space-between;
+}
+.flex-c {
+  justify-content: center;
+}
+.grid {
+  display: grid;
+}
+.container {
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+button {
+  outline: 0;
+  border: none;
+  font-family: var(--main-font);
+  background-color: transparent;
+  cursor: pointer;
+}
+
+img {
+  width: 100%;
+  display: block;
+}
+
+@media screen and (min-width: 992px) {
+  .navbar-collapse {
+    position: relative;
+    height: auto;
+    padding: 0;
+    width: 100%;
+    background-color: transparent;
+    transform: translateX(0);
+    justify-content: flex-end;
+  }
+  .navbar-toggler-btn {
+    display: none;
+  }
+  .nav-item {
+    margin-bottom: 0;
+    margin-left: 2.8rem;
+  }
+  .nav-link {
+    font-size: var(--normal-font-size);
+    font-weight: 700 !important;
+  }
+  .navbar-nav {
+    display: flex;
+  }
+
+  .container {
+    padding: 0 10rem;
+  }
+
+  .navbar {
+    padding: 0;
+  }
+
+  .navbar-brand {
+    width: 100px;
+  }
+  .nav-link:hover {
+    color: var(--secondary-color);
+    font-weight: 700;
+    cursor: pointer;
+  }
+}

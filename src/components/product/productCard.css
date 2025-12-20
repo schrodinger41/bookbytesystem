@@ -1,0 +1,131 @@
+.productcard-wrapper {
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+  transition: transform 0.3s ease;
+}
+
+.productcard-wrapper:hover {
+  cursor: pointer;
+}
+
+/* Image container that handles both front and back image */
+.productcard-image-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+/* Base style for both front and back images */
+.productcard-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.5s ease;
+  border-radius: 10px;
+}
+
+/* Z-index and default opacity for front image */
+.productcard-image.front {
+  z-index: 1;
+  opacity: 1;
+}
+
+/* Z-index and default opacity for back image (initially hidden) */
+.productcard-image.back {
+  z-index: 0;
+  opacity: 0;
+}
+
+/* On hover, fade out front and fade in back */
+.productcard-image-container:hover .productcard-image.front {
+  opacity: 0;
+}
+
+.productcard-image-container:hover .productcard-image.back {
+  opacity: 1;
+}
+
+/* Optional badge styling */
+.productcard-badge {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  padding: 5px 10px;
+  color: white;
+  font-weight: bold;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.productcard-badge.preorder {
+  background-color: #fbbc05;
+}
+
+.productcard-badge.sold-out {
+  background-color: #ea4335;
+}
+
+/* Product details section */
+.productcard-details {
+  padding: 0 0 15px;
+  text-align: left;
+}
+
+/* Main title: type and series */
+.productcard-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-top: 15px;
+  margin-bottom: 8px;
+  color: #333;
+  line-height: 1.4;
+}
+
+/* Product name (variant) */
+.productcard-name {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+/* Product price */
+.productcard-price {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: black;
+}
+
+.productcard-wrapper.disabled {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.productcard-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(30, 30, 30, 0.5);
+  z-index: 2;
+  border-radius: 10px;
+}
+
+.productcard-outofstock-label {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background-color: rgba(255, 2, 2, 0.8);
+  color: white;
+  font-size: 0.8rem;
+  padding: 6px 8px;
+  border-radius: 5px;
+  font-weight: bold;
+  z-index: 3;
+}

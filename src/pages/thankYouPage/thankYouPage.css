@@ -1,0 +1,116 @@
+.thankYouPage {
+  position: relative;
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.thankYouPage::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("../../images/bg_images/bg_image_13.png") no-repeat center
+    center;
+  background-size: cover;
+  z-index: -2;
+}
+
+.thankYouPage::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); /* semi-transparent black */
+  z-index: -1;
+}
+
+.thankYouPage-hero {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 18rem 1rem 8rem 1rem;
+  position: relative;
+}
+
+.thankYouPage-messageBox {
+  position: relative;
+  background: white;
+  border-radius: 10px;
+  padding: 3rem 2rem 2rem 2rem;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  margin-top: 100px; /* push the whole box down */
+  z-index: 1;
+}
+
+.thankYouPage-labubu {
+  position: absolute;
+  top: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  max-width: 90%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.thankYouPage-messageBox h2 {
+  color: #ff7a7a;
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.thankYouPage-messageBox p {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.thankYouPage-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.thankYouPage-icons a {
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.thankYouPage-icons a:hover {
+  color: #ff7a7a;
+}
+
+.thankYouPage-button {
+  background-color: #3a2e2e;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.thankYouPage-button:hover {
+  background-color: #2a1f1f;
+}
+
+@media (max-width: 480px) {
+  .thankYouPage-hero {
+    padding: 10rem 1rem 5rem 1rem;
+  }
+}
