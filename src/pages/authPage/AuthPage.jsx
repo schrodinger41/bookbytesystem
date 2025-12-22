@@ -1,0 +1,168 @@
+import React, { useState, useEffect } from "react";
+import { signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { setDoc, doc, getDoc } from "firebase/firestore";
+import { auth, provider, db } from "../../config/firebase";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import "./authPage.css";
+import bookLogo from "../../images/icon.png"; // Assuming this exists based on Header.jsx
+
+const AuthPage = () => {
+    const { user, isAdmin, loading: authLoading } = useAuth();
+    const [isLogin, setIsLogin] = useState(true);
+    const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (authLoading) return; // Wait for loading to finish
+
+        if (user) {
+            if (isAdmin) {
+                navigate("/admin");
+            } else {
+                navigate("/");
+            }
+        }
+    }, [user, isAdmin, authLoading, navigate]);
+
+    // Form States
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [fullName, setFullName] = useState("");
+
+    const handleGoogleSignIn = async () => {
+        setLoading(true);
+        setErrorMessage("");
+        try {
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+
+            // Check if user doc exists, if not create it with basic info from Google
+            try {
+                const userDocRef = doc(db, "users", user.uid);
+                const userDoc = await getDoc(userDocRef);
+
+                if (!userDoc.exists()) {
+                    await setDoc(userDocRef, {
+                        fullName: user.displayName || "User",
+                        email: user.email,
+                        createdAt: new Date(),
+                    });
+                }
+            } catch (dbError) {
+                console.warn("Firestore user profile creation failed (likely permissions or network blocker):", dbError);
+                // Continue to navigate even if DB save fails, as Auth was successful
+            }
+
+            // navigate("/") - Handled by useEffect
+        } catch (error) {
+            console.error(error);
+            setErrorMessage(error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleEmailAuth = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setErrorMessage("");
+
+        try {
+            if (isLogin) {
+                // Sign In
+                await signInWithEmailAndPassword(auth, email, password);
+                // navigate("/") - Handled by useEffect
+            } else {
+                // Sign Up
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                // Save additional info to Firestore
+                try {
+                    await setDoc(doc(db, "users", user.uid), {
+                        fullName,
+                        email,
+                        createdAt: new Date(),
+                    });
+                } catch (dbError) {
+                    console.warn("Firestore user profile creation failed:", dbError);
+                }
+
+                // navigate("/") - Handled by useEffect
+            }
+        } catch (error) {
+            console.error(error);
+            setErrorMessage(error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return (
+        <div className="auth-container">
+            <div className="auth-card">
+                <div className="auth-header">
+                    <img src={bookLogo} alt="BookByte" className="auth-logo" />
+                    <h2>{isLogin ? "Welcome Back" : "Create Account"}</h2>
+                    <p className="auth-subtitle">
+                        {isLogin ? "Sign in to access your library reservations" : "Join BookByte to reserve books"}
+                    </p>
+                </div>
+
+                {errorMessage && <p className="auth-error">{errorMessage}</p>}
+
+                <form onSubmit={handleEmailAuth} className="auth-form">
+                    {!isLogin && (
+                        <input
+                            type="text"
+                            placeholder="Full Name"
+                            required
+                            value={fullName}
+                            onChange={(e) => setFullName(e.target.value)}
+                        />
+                    )}
+
+                    <input
+                        type="email"
+                        placeholder="Email Address"
+                        required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        required
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+
+                    <button type="submit" disabled={loading} className="auth-main-btn">
+                        {loading ? "Processing..." : (isLogin ? "Sign In" : "Sign Up")}
+                    </button>
+                </form>
+
+                <div className="auth-divider">
+                    <span>OR</span>
+                </div>
+
+                <button onClick={handleGoogleSignIn} disabled={loading} className="auth-google-btn">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
+                    {isLogin ? "Sign in with Google" : "Sign up with Google"}
+                </button>
+
+                <p className="auth-toggle">
+                    {isLogin ? "New to BookByte?" : "Already hava an account?"}{" "}
+                    <span onClick={() => setIsLogin(!isLogin)}>
+                        {isLogin ? "Create Account" : "Sign In"}
+                    </span>
+                </p>
+            </div>
+        </div>
+    );
+};
+
+export default AuthPage;

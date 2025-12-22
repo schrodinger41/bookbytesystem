@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { signInWithPopup } from "firebase/auth";
-import { collection, getDocs, doc, setDoc } from "firebase/firestore";
+import { collection, getDocs, doc, setDoc, query, orderBy, runTransaction } from "firebase/firestore";
 import { auth, provider, db } from "../../config/firebase";
 import { useAuth } from "../../context/AuthContext";
 import Footer from "../../components/footer/Footer";
@@ -11,13 +11,19 @@ import "./adminPage.css";
 
 function AdminPage() {
   const { user, isAdmin } = useAuth();
+  const [activeTab, setActiveTab] = useState("books");
+
+  // Book Data
   const [products, setProducts] = useState([]);
   const [quantities, setQuantities] = useState({});
-  const [prices, setPrices] = useState({});
+  const [prices, setPrices] = useState({}); // Keep for record, even if not shown publicly
   const [editMode, setEditMode] = useState({});
   const [editedQuantities, setEditedQuantities] = useState({});
   const [editedPrices, setEditedPrices] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
+
+  // Rental Data
+  const [rentals, setRentals] = useState([]);
 
   const handleLogin = async () => {
     try {
@@ -26,7 +32,6 @@ function AdminPage() {
       console.error("Login failed", error);
     }
   };
-  // test
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -42,7 +47,7 @@ function AdminPage() {
         fetchedProducts.push({
           id,
           ...data,
-          image: imageMap[data.imageKey] || "", // resolve image 🔁
+          image: imageMap[data.imageKey] || "",
         });
 
         qtyData[id] = data.quantity ?? 0;
@@ -56,9 +61,23 @@ function AdminPage() {
       setPrices(priceData);
     };
 
-    fetchProducts();
-  }, []);
+    const fetchRentals = async () => {
+      try {
+        const q = query(collection(db, "Reservations"), orderBy("reservedAt", "desc"));
+        const snapshot = await getDocs(q);
+        setRentals(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      } catch (err) {
+        console.error("Error fetching rentals", err);
+      }
+    };
 
+    if (user && isAdmin) {
+      fetchProducts();
+      fetchRentals();
+    }
+  }, [user, isAdmin]);
+
+  // --- Book Management Handlers ---
   const handleQuantityChange = (id, value) => {
     setEditedQuantities((prev) => ({ ...prev, [id]: value }));
   };
@@ -87,7 +106,7 @@ function AdminPage() {
     });
   };
 
-  const handleSave = async (id) => {
+  const handleSaveBook = async (id) => {
     const newQty = Math.max(0, parseInt(editedQuantities[id]) || 0);
     const newPrice = Math.max(0, parseFloat(editedPrices[id]) || 0);
 
@@ -109,14 +128,68 @@ function AdminPage() {
     }
   };
 
+  // --- Rental Management Handlers ---
+  const handleConfirmReturn = async (rentalId) => {
+    try {
+      await runTransaction(db, async (transaction) => {
+        const rentalRef = doc(db, "Reservations", rentalId);
+        const rentalSnap = await transaction.get(rentalRef);
+
+        if (!rentalSnap.exists()) throw "Rental does not exist!";
+        const rentalData = rentalSnap.data();
+
+        if (rentalData.status === "ReturnedConfirmed") throw "Already confirmed!";
+
+        // Update Products stock
+        for (const item of rentalData.items) {
+          const productRef = doc(db, "Products", item.id.toString());
+          const productSnap = await transaction.get(productRef);
+          if (productSnap.exists()) {
+            const currentQty = productSnap.data().quantity || 0;
+            transaction.update(productRef, { quantity: currentQty + item.quantity });
+          }
+        }
+
+        // Update Rental Status
+        transaction.update(rentalRef, {
+          status: "ReturnedConfirmed",
+          returnedAt: new Date()
+        });
+      });
+
+      // Update local state
+      setRentals(prev => prev.map(r =>
+        r.id === rentalId ? { ...r, status: "ReturnedConfirmed" } : r
+      ));
+
+      // Update local quantities state to reflect returned stock
+      const rental = rentals.find(r => r.id === rentalId);
+      if (rental) {
+        const newQtyMap = { ...quantities };
+        rental.items.forEach(item => {
+          if (newQtyMap[item.id] !== undefined) {
+            newQtyMap[item.id] += item.quantity;
+          }
+        });
+        setQuantities(newQtyMap);
+      }
+
+      alert("Return confirmed and stock updated!");
+
+    } catch (error) {
+      console.error("Error confirming return:", error);
+      alert("Failed to confirm return: " + error);
+    }
+  };
+
+
   const filteredProducts = products.filter((product) => {
     const query = searchQuery.toLowerCase();
     return (
       product.id?.toString().includes(query) ||
       product.name?.toLowerCase().includes(query) ||
       product.series?.toLowerCase().includes(query) ||
-      product.author?.toLowerCase().includes(query) ||
-      product.brand?.toLowerCase().includes(query)
+      product.author?.toLowerCase().includes(query)
     );
   });
 
@@ -144,102 +217,196 @@ function AdminPage() {
         {user && isAdmin && (
           <>
             <div className="adminPage-header">
-              <h1>Product Management</h1>
-              <input
-                type="text"
-                className="adminPage-searchInput"
-                placeholder="Search by Title, Genre, or Author..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
+              <h1>Admin Dashboard</h1>
+              <div className="admin-tabs">
+                <button
+                  className={`tab-btn ${activeTab === "books" ? "active" : ""}`}
+                  onClick={() => setActiveTab("books")}
+                >
+                  Book Inventory
+                </button>
+                <button
+                  className={`tab-btn ${activeTab === "rentals" ? "active" : ""}`}
+                  onClick={() => setActiveTab("rentals")}
+                >
+                  Reservation Requests
+                </button>
+                <button
+                  className={`tab-btn ${activeTab === "users" ? "active" : ""}`}
+                  onClick={() => setActiveTab("users")}
+                >
+                  Active Users
+                </button>
+              </div>
             </div>
 
-            <table className="adminPage-table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Title</th>
-                  <th>Genre</th>
-                  <th>Author</th>
-                  <th>Quantity</th>
-                  <th>Price</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredProducts.map((product) => {
-                  const id = product.id;
-                  const isEditing = editMode[id];
-                  const quantityValue = isEditing
-                    ? editedQuantities[id]
-                    : quantities[id];
-                  const priceValue = isEditing ? editedPrices[id] : prices[id];
+            {activeTab === "books" && (
+              <>
+                <input
+                  type="text"
+                  className="adminPage-searchInput"
+                  placeholder="Search by Title, Genre, or Author..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  style={{ marginBottom: '20px' }}
+                />
+                <div className="table-scroll-container">
+                  <table className="adminPage-table">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Genre</th>
+                        <th>Author</th>
+                        <th>Available Copies</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredProducts.map((product) => {
+                        const id = product.id;
+                        const isEditing = editMode[id];
+                        const quantityValue = isEditing
+                          ? editedQuantities[id]
+                          : quantities[id];
 
-                  return (
-                    <tr key={id}>
-                      <td>{id}</td>
-                      <td>{product.name}</td>
-                      <td>{product.series}</td>
-                      <td>{product.author || product.brand}</td>
-                      <td>
-                        <input
-                          type="number"
-                          min="0"
-                          value={quantityValue}
-                          onChange={(e) =>
-                            handleQuantityChange(id, e.target.value)
-                          }
-                          className="adminPage-quantityInput"
-                          disabled={!isEditing}
-                        />
-                      </td>
-                      <td>
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                          <span>$</span>
-                          <input
-                            type="number"
-                            step="0.01"
-                            min="0"
-                            value={priceValue}
-                            onChange={(e) =>
-                              handlePriceChange(id, e.target.value)
-                            }
-                            className="adminPage-priceInput"
-                            disabled={!isEditing}
-                            style={{ marginLeft: "4px", width: "60px" }}
-                          />
-                        </div>
-                      </td>
-                      <td className="adminPage-actions">
-                        {!isEditing ? (
-                          <img
-                            src={EditIcon}
-                            alt="Edit"
-                            className="adminPage-actionBtn"
-                            onClick={() => handleEditClick(id)}
-                          />
-                        ) : (
-                          <div style={{ display: "flex", gap: "5px" }}>
-                            <button
-                              onClick={() => handleSave(id)}
-                              className="adminPage-saveBtn"
-                            >
-                              Save
-                            </button>
-                            <button
-                              onClick={() => handleCancel(id)}
-                              className="adminPage-cancelBtn"
-                            >
-                              Cancel
-                            </button>
-                          </div>
-                        )}
-                      </td>
+                        return (
+                          <tr key={id}>
+                            <td>{id}</td>
+                            <td>{product.name}</td>
+                            <td>{product.series}</td>
+                            <td>{product.author || product.brand}</td>
+                            <td>
+                              <input
+                                type="number"
+                                min="0"
+                                value={quantityValue}
+                                onChange={(e) =>
+                                  handleQuantityChange(id, e.target.value)
+                                }
+                                className="adminPage-quantityInput"
+                                disabled={!isEditing}
+                              />
+                            </td>
+                            <td className="adminPage-actions">
+                              {!isEditing ? (
+                                <img
+                                  src={EditIcon}
+                                  alt="Edit"
+                                  className="adminPage-actionBtn"
+                                  onClick={() => handleEditClick(id)}
+                                />
+                              ) : (
+                                <div style={{ display: "flex", gap: "5px" }}>
+                                  <button
+                                    onClick={() => handleSaveBook(id)}
+                                    className="adminPage-saveBtn"
+                                  >
+                                    Save
+                                  </button>
+                                  <button
+                                    onClick={() => handleCancel(id)}
+                                    className="adminPage-cancelBtn"
+                                  >
+                                    Cancel
+                                  </button>
+                                </div>
+                              )}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </>
+            )}
+
+            {activeTab === "rentals" && (
+              <div className="table-scroll-container">
+                <table className="adminPage-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>User</th>
+                      <th>Books Reserved</th>
+                      <th>Status</th>
+                      <th>Actions</th>
                     </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                  </thead>
+                  <tbody>
+                    {rentals.map((rental) => (
+                      <tr key={rental.id}>
+                        <td>{rental.reservedAt?.toDate().toLocaleDateString()}</td>
+                        <td>
+                          {rental.userInfo.fullName}<br />
+                          <small>{rental.userInfo.email}</small>
+                        </td>
+                        <td>
+                          <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                            {rental.items.map((item, i) => (
+                              <li key={i}>
+                                {item.series} - {item.variant} (x{item.quantity})
+                              </li>
+                            ))}
+                          </ul>
+                        </td>
+                        <td>
+                          <span className={`status-badge ${rental.status}`}>
+                            {rental.status}
+                          </span>
+                        </td>
+                        <td>
+                          {rental.status === "ReturnedByUser" && (
+                            <button
+                              className="confirm-return-btn"
+                              onClick={() => handleConfirmReturn(rental.id)}
+                            >
+                              Confirm Return
+                            </button>
+                          )}
+                          {rental.status === "Reserved" && (
+                            <span className="text-muted">Active</span>
+                          )}
+                          {rental.status === "ReturnedConfirmed" && (
+                            <span className="text-success">Completed</span>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
+            {activeTab === "users" && (
+              <div className="table-scroll-container">
+                <table className="adminPage-table">
+                  <thead>
+                    <tr>
+                      <th>User ID</th>
+                      <th>Full Name</th>
+                      <th>Email</th>
+                      <th>Total Reservations</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {Array.from(new Set(rentals.map(r => r.userId))).map(userId => {
+                      const userRentals = rentals.filter(r => r.userId === userId);
+                      const userInfo = userRentals[0]?.userInfo || {};
+                      return (
+                        <tr key={userId}>
+                          <td>{userId}</td>
+                          <td>{userInfo.fullName || "N/A"}</td>
+                          <td>{userInfo.email || "N/A"}</td>
+                          <td>{userRentals.length}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </>
         )}
       </div>

@@ -13,13 +13,6 @@ import businessImg from "../../images/product_images/Business - Rich Dad Poor Da
 import eduImg from "../../images/product_images/Education - Oxford English Dictionary.jpg";
 import fantasyImg from "../../images/product_images/Fantasy - Harry Potter and the Sorcerers Stone.jpg";
 
-import deliveryIcon from "../../images/icon_images/delivery_icon.png";
-import authenticIcon from "../../images/icon_images/authentic_icon.png";
-import responseIcon from "../../images/icon_images/response_icon.png";
-import packagingIcon from "../../images/icon_images/packaging_icon.png";
-
-import bookFace from "../../images/book_face.jpg";
-
 const HomePage = () => {
   const productCardImages = {
     "Fiction": fictionImg,
@@ -45,7 +38,7 @@ const HomePage = () => {
             <h1>BookByte</h1>
             <h4 className='desc'>Welcome to BookByte, your premier destination for discovering and exploring your next favorite book!</h4>
             <a href="/ProductCatalogue" className="shop-now-btn">
-              Shop Now
+              Reserve Now
             </a>
           </div>
         </div>
@@ -118,168 +111,9 @@ const HomePage = () => {
 
 
 
-        {/* SHOP BADGES */}
-        <div className="shop-badges-section">
-          <div className="badge-grid">
-            <div className="badge-card">
-              <img src={deliveryIcon} alt="Reliable Delivery" />
-              <h4>Reliable Delivery</h4>
-              <p>Orders arrive safely, securely, and on time.</p>
-            </div>
-            <div className="badge-card">
-              <img src={authenticIcon} alt="Authentic Products" />
-              <h4>Authentic Products</h4>
-              <p>Guaranteed original and trusted items.</p>
-            </div>
-            <div className="badge-card">
-              <img src={responseIcon} alt="Timely Response" />
-              <h4>Timely Response</h4>
-              <p>Quick and reliable customer support.</p>
-            </div>
-            <div className="badge-card">
-              <img src={packagingIcon} alt="Secure Packaging" />
-              <h4>Secure Packaging</h4>
-              <p>Carefully packed to ensure item safety.</p>
-            </div>
-          </div>
-        </div>
 
-        {/* CUSTOMER REVIEWS */}
-        <div className="customer-reviews-section">
-          <h2 className="reviews-title">Customer Reviews</h2>
-          <p className="reviews-subtitle">
-            Discover what our customers think about our services
-          </p>
-          <div className="review-grid">
-            <div className="review-card">
-              <div className="stars">★★★★★</div>
-              <div className="review-row">
-                <img
-                  src={bookFace}
-                  alt="Michelle profile"
-                  className="review-avatar"
-                />
-                <div className="review-content">
-                  <h4 className="review-name">Michelle</h4>
-                  <p className="review-text">Fantastic bookstore! Found the exact edition of '1984' I was looking for.</p>
-                </div>
-              </div>
-            </div>
-            <div className="review-card">
-              <div className="stars">★★★★★</div>
-              <div className="review-row">
-                <img
-                  src={bookFace}
-                  alt="Kyle profile"
-                  className="review-avatar"
-                />
-                <div className="review-content">
-                  <h4 className="review-name">Kyle</h4>
-                  <p className="review-text">
-                    Great selection and fast shipping. Highly recommend BookByte for all your reading needs!
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="review-card">
-              <div className="stars">★★★★★</div>
-              <div className="review-row">
-                <img
-                  src={bookFace}
-                  alt="Jorge profile"
-                  className="review-avatar"
-                />
-                <div className="review-content">
-                  <h4 className="review-name">Jorge</h4>
-                  <p className="review-text">
-                    Very friendly service and extensive collection. Will buy
-                    again from here.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="review-card">
-              <div className="stars">★★★★★</div>
-              <div className="review-row">
-                <img
-                  src={bookFace}
-                  alt="Becca profile"
-                  className="review-avatar"
-                />
-                <div className="review-content">
-                  <h4 className="review-name">Becca</h4>
-                  <p className="review-text">
-                    Super nice packaging! My books arrived in perfect condition.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="review-card">
-              <div className="stars">★★★★★</div>
-              <div className="review-row">
-                <img
-                  src={bookFace}
-                  alt="Lufthansa profile"
-                  className="review-avatar"
-                />
-                <div className="review-content">
-                  <h4 className="review-name">Lufthansa</h4>
-                  <p className="review-text">
-                    Ordered 'Atomic Habits' and it arrived quickly. Book was in pristine condition. Smooth process.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="review-card">
-              <div className="stars">★★★★★</div>
-              <div className="review-row">
-                <img
-                  src={bookFace}
-                  alt="Katie profile"
-                  className="review-avatar"
-                />
-                <div className="review-content">
-                  <h4 className="review-name">Katie</h4>
-                  <p className="review-text">
-                    Legit bookstore! Quick at shipping and great communication regarding my order status.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="review-card">
-              <div className="stars">★★★★★</div>
-              <div className="review-row">
-                <img
-                  src={bookFace}
-                  alt="Cori profile"
-                  className="review-avatar"
-                />
-                <div className="review-content">
-                  <h4 className="review-name">Cori</h4>
-                  <p className="review-text">
-                    Great experience, will definitely purchase more books in the future.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="review-card">
-              <div className="stars">★★★★★</div>
-              <div className="review-row">
-                <img
-                  src={bookFace}
-                  alt="Yolanda profile"
-                  className="review-avatar"
-                />
-                <div className="review-content">
-                  <h4 className="review-name">Yolanda</h4>
-                  <p className="review-text">
-                    Authentic editions! Seller was transparent and so easy to work with. Would definitely recommend!
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+
+
       </div>
       <Footer />
     </div>

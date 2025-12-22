@@ -51,10 +51,7 @@ const CartPage = () => {
 
   // Update estimated total
   useEffect(() => {
-    const total = cartItems.reduce(
-      (sum, item) => sum + Number(item.price) * item.quantity,
-      0
-    );
+    const total = 0;
     setEstimatedTotal(total);
   }, [cartItems]);
 
@@ -92,9 +89,9 @@ const CartPage = () => {
 
       <div className="cartPage-container">
         <div className="cartPage-headerRow">
-          <h1 className="cartPage-title">Your Cart</h1>
+          <h1 className="cartPage-title">Your Reservation List</h1>
           <a href="/ProductCatalogue" className="cartPage-continueLink">
-            Continue Shopping
+            Continue Browsing
           </a>
         </div>
 
@@ -106,15 +103,15 @@ const CartPage = () => {
                 alt="Empty Cart"
                 className="empty-cart-image"
               />
-              <p className="empty-cart-text">Your cart is empty</p>
+              <p className="empty-cart-text">Your reservation list is empty</p>
             </div>
           </div>
         ) : (
           <>
             <div className="cartPage-topRow">
-              <span>Product</span>
+              <span>Book</span>
               <span>Quantity</span>
-              <span>Total</span>
+
             </div>
 
             <div className="cartPage-itemList">
@@ -160,9 +157,7 @@ const CartPage = () => {
                       >
                         {item.variant}
                       </p>
-                      <p className="cartPage-productPrice">
-                        ${Number(item.price).toFixed(2)}
-                      </p>
+
                     </div>
                   </div>
 
@@ -197,26 +192,21 @@ const CartPage = () => {
                     </button>
                   </div>
 
-                  <div className="cartPage-itemTotal">
-                    ${(Number(item.price) * item.quantity).toFixed(2)}
-                  </div>
+
                 </div>
               ))}
             </div>
 
             <div className="cartPage-bottom">
               <div className="cartPage-summary">
-                <p className="cartPage-estimatedTotalLabel">Estimated Total</p>
-                <p className="cartPage-estimatedTotalValue">
-                  ${estimatedTotal.toFixed(2)}
-                </p>
+
               </div>
 
               <button
                 className="cartPage-summaryButton"
                 onClick={() => setShowModal(true)}
               >
-                View Order Summary
+                Proceed to Reserve
               </button>
 
               {showModal && (

@@ -1,0 +1,104 @@
+.myrentals-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    min-height: 60vh;
+}
+
+.myrentals-title {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #333;
+}
+
+.rentals-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.rental-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.rental-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.rental-status {
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.status-Rented {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+.status-ReturnedByUser {
+    background-color: #fff3e0;
+    color: #f57c00;
+}
+
+.status-ReturnedConfirmed {
+    background-color: #e8f5e9;
+    color: #388e3c;
+}
+
+.rental-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.rental-item {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    border: 1px solid #f0f0f0;
+    padding: 10px;
+    border-radius: 6px;
+    width: 100%;
+    max-width: 350px;
+}
+
+.rental-item-img {
+    width: 60px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.rental-actions {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.return-btn {
+    padding: 10px 20px;
+    background-color: #d32f2f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.return-btn:hover {
+    background-color: #b71c1c;
+}
+
+.return-btn.disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

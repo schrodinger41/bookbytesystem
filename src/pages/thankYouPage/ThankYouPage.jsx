@@ -1,7 +1,7 @@
 import React from "react";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
-import labubuImg from "../../images/thank_you_labubu.png";
+
 import "./thankYouPage.css";
 
 const ThankYouPage = () => {

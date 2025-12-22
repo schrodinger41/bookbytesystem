@@ -6,7 +6,7 @@ const AddToCartModal = ({ image, series, onClose, onViewCart }) => {
     <div className="cart-modal-overlay">
       <div className="cart-modal-content">
         <div className="cart-modal-header">
-          <p className="cart-modal-title">Item added to your cart!</p>
+          <p className="cart-modal-title">Book added to your rental bag!</p>
           <button className="cart-modal-close" onClick={onClose}>
             ×
           </button>
@@ -18,7 +18,7 @@ const AddToCartModal = ({ image, series, onClose, onViewCart }) => {
         </div>
 
         <button className="view-cart-button" onClick={onViewCart}>
-          View Cart
+          View Rental Bag
         </button>
 
         <button className="ok-button" onClick={onClose}>

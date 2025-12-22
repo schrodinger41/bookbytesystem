@@ -1,134 +1,210 @@
+.adminPage {
+  background-color: #fce4ec;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .adminPage-container {
   max-width: 1200px;
-  margin: 0 auto 2rem auto;
-  padding: 120px 1rem 0 1rem;
-  min-height: 60vh;
+  width: 90%;
+  margin: 40px auto;
+  flex: 1;
 }
 
 .adminPage-header {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
+  gap: 1rem;
 }
 
 .adminPage-header h1 {
-  font-size: 1.75rem;
-  font-weight: bold;
+  font-size: 2.5rem;
+  color: #880e4f;
 }
 
-.adminPage-addIcon {
-  width: 24px;
-  height: 24px;
+.adminPage-loginButton {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  background-color: #d81b60;
+  color: white;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
+  margin-top: 20px;
+}
+
+.adminPage-loginButton:hover {
+  background-color: #ad1457;
+}
+
+/* Tabs */
+.admin-tabs {
+  display: flex;
+  gap: 20px;
+}
+
+.tab-btn {
+  background: white;
+  border: 1px solid #d81b60;
+  color: #d81b60;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.tab-btn.active {
+  background: #d81b60;
+  color: white;
+}
+
+.adminPage-searchInput {
+  width: 100%;
+  max-width: 500px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
 }
 
 .adminPage-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.95rem;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.adminPage-table thead th {
-  border: 1px solid #ccc;
-  padding: 0.75rem;
-  background-color: #f7f7f7;
+.adminPage-table th,
+.adminPage-table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.adminPage-table th {
+  background-color: #f8bbd0;
+  color: #880e4f;
   font-weight: bold;
-  text-align: center;
-}
-.adminPage-table tbody tr {
-  min-height: 100px;
-  text-align: center;
-}
-.adminPage-table tbody td {
-  border: 1px solid #ccc;
-  padding: 0.75rem;
-  vertical-align: middle;
-  min-height: 100px;
 }
 
-.adminPage-productImg {
-  width: 40px;
-  height: auto;
-  object-fit: contain;
+.adminPage-table tr:hover {
+  background-color: #fce4ec;
+}
+
+.adminPage-quantityInput,
+.adminPage-priceInput {
+  width: 60px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.adminPage-quantityInput:disabled,
+.adminPage-priceInput:disabled {
+  background-color: transparent;
+  border: none;
+  font-weight: bold;
+  color: #333;
 }
 
 .adminPage-actions {
-  text-align: center;
-  vertical-align: middle;
-  white-space: nowrap;
+  display: flex;
+  align-items: center;
 }
 
 .adminPage-actionBtn {
-  display: inline-block;
   width: 20px;
   height: 20px;
-  margin: 0 4px; /* Space between icons */
-  vertical-align: middle; /* Align icons to middle of line */
   cursor: pointer;
 }
 
-.adminPage-loginButton {
-  padding: 0.75rem 1.5rem;
-  background-color: black;
-  color: white;
-  font-weight: bold;
+.adminPage-saveBtn,
+.adminPage-cancelBtn {
+  padding: 5px 10px;
   border: none;
-  border-radius: 6px;
+  border-radius: 3px;
   cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.adminPage-loginButton:hover {
-  background-color: #2a1f1f;
-}
-
-.adminPage-quantityInput {
-  width: 60px;
-  padding: 4px;
-  text-align: center;
+  font-size: 0.8rem;
 }
 
 .adminPage-saveBtn {
-  background-color: var(--primary-color);
+  background-color: #4caf50;
   color: white;
-  border: none;
-  padding: 4px 8px;
-  cursor: pointer;
-  border-radius: 4px;
-}
-.adminPage-saveBtn:hover {
-  background-color: #291e1e;
-}
-
-.input-error {
-  border: 2px solid red;
-}
-
-.adminPage-saveBtn:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
 }
 
 .adminPage-cancelBtn {
   background-color: #f44336;
   color: white;
-  padding: 5px 8px;
+}
+
+/* Status Badges */
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.status-badge.Rented {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.status-badge.ReturnedByUser {
+  background-color: #fff3e0;
+  color: #f57c00;
+}
+
+.status-badge.ReturnedConfirmed {
+  background-color: #e8f5e9;
+  color: #388e3c;
+}
+
+.confirm-return-btn {
+  background-color: #66bb6a;
+  color: white;
   border: none;
+  padding: 5px 10px;
   border-radius: 4px;
   cursor: pointer;
 }
 
-.adminPage-cancelBtn:hover {
-  background-color: #d32f2f;
+.confirm-return-btn:hover {
+  background-color: #43a047;
 }
 
-.adminPage-searchInput {
-  padding: 8px 12px;
-  width: 300px;
-  font-size: 16px;
-  margin-top: 10px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+.text-success {
+  color: green;
+  font-weight: bold;
+}
+
+.text-muted {
+  color: #888;
+}
+
+.table-scroll-container {
+  max-height: 450px;
+  /* Approx 8 rows */
+  overflow-y: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
+
+.table-scroll-container .adminPage-table {
+  box-shadow: none;
+  /* Remove shadow from table as container has it */
+  border-radius: 0;
+}
+
+.table-scroll-container thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }

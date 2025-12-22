@@ -51,7 +51,7 @@ const ProductCard = ({
         <p className="productcard-title">
           {productName || "Unnamed"}
         </p>
-        <p className="productcard-price">${price}</p>
+
       </div>
     </Link>
   );

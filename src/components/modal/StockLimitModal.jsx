@@ -13,11 +13,11 @@ const StockLimitModal = ({ stock, existingQty, onClose, onViewCart }) => {
           <p>
             Only <strong>{stock}</strong> of this variant is in stock.
             <br />
-            You already have <strong>{existingQty}</strong> in your cart.
+            You already have <strong>{existingQty}</strong> in your rental bag.
           </p>
         </div>
         <button className="view-cart-button" onClick={onViewCart}>
-          View Cart
+          View Rental Bag
         </button>
         <button className="ok-button" onClick={onClose}>
           Okay

@@ -35,14 +35,10 @@ function Footer() {
           </p>
           <p>
             <a href="/ProductCatalogue" className="footer-link">
-              Products
+              Books
             </a>
           </p>
-          <p>
-            <a href="/ContactUs" className="footer-link">
-              Contact Us
-            </a>
-          </p>
+
           <p>
             <a href="/Faq" className="footer-link">
               Frequently Asked Questions (FAQ)

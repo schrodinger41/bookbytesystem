@@ -24,7 +24,7 @@ const getPriceRange = (product) => {
 
 const AllProductsPage = () => {
   const [allProducts, setAllProducts] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("All Products");
+  const [selectedCategory, setSelectedCategory] = useState("All Books");
   const [filteredBySeries, setFilteredBySeries] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showCategories, setShowCategories] = useState(false);
@@ -37,13 +37,13 @@ const AllProductsPage = () => {
 
   useEffect(() => {
     if (seriesParam) {
-      setSelectedCategory("All Products");
+      setSelectedCategory("All Books");
       setFilteredBySeries(seriesParam.toLowerCase());
     } else if (categoryParam) {
       setSelectedCategory(decodeURIComponent(categoryParam));
       setFilteredBySeries(null);
     } else {
-      setSelectedCategory("All Products");
+      setSelectedCategory("All Books");
       setFilteredBySeries(null);
     }
   }, [seriesParam, categoryParam]);
@@ -92,7 +92,7 @@ const AllProductsPage = () => {
   const baseFilteredProducts = getFilteredProducts(allProducts);
 
   const filterByCategory = (products) => {
-    if (selectedCategory === "All Products") {
+    if (selectedCategory === "All Books") {
       return products;
     }
     return products.filter((p) => p.type === selectedCategory);
@@ -103,7 +103,7 @@ const AllProductsPage = () => {
   );
 
   const categories = [
-    "All Products",
+    "All Books",
     "Fiction",
     "Non-Fiction",
     "History",
@@ -158,12 +158,12 @@ const AllProductsPage = () => {
           {isLoading ? (
             <div className="loading-container">
               <img src={loadingGif} alt="Loading..." className="loading-gif" />
-              <p className="loading-text">Loading products...</p>
+              <p className="loading-text">Loading books...</p>
             </div>
           ) : filteredProducts.length === 0 ? (
             <div className="empty-state">
               <img src={emptyIcon} alt="Nothing here" className="empty-icon" />
-              <p className="empty-text">Nothing to see here for now</p>
+              <p className="empty-text">No books available for reservation at the moment</p>
             </div>
           ) : (
             <div className="allproducts-grid">
@@ -174,7 +174,6 @@ const AllProductsPage = () => {
 
                   return {
                     product,
-                    displayPrice,
                     outOfStock,
                   };
                 })
@@ -187,7 +186,6 @@ const AllProductsPage = () => {
                   <ProductCard
                     key={product.id}
                     {...product}
-                    price={displayPrice}
                     outOfStock={outOfStock}
                   />
                 ))}

@@ -1,13 +1,29 @@
 import React, { useState } from "react";
 import logoImg from "../../images/icon.png";
 import "./header.css";
-import { FaCartShopping } from "react-icons/fa6";
+import { FaBook } from "react-icons/fa6";
 
 import { HiOutlineMenuAlt3 } from "react-icons/hi"; // Added this if you forgot to import the icon
 
+import { useAuth } from "../../context/AuthContext";
+import { signOut } from "firebase/auth";
+import { auth } from "../../config/firebase";
+import { useNavigate } from "react-router-dom";
+
 function Header() {
   const [toggleMenu, setToggleMenu] = useState(false);
+  const { user, isAdmin } = useAuth();
+  const navigate = useNavigate();
   const handleNavbar = () => setToggleMenu(!toggleMenu);
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate("/Login");
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
 
   return (
     <nav className="navbar" id="navbar">
@@ -36,30 +52,45 @@ function Header() {
           }
         >
           <ul className="navbar-nav">
-            <li className="nav-item">
-              <a href="/" className="nav-link" onClick={handleNavbar}>
-                HOME
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
-                href="/ProductCatalogue"
-                className="nav-link"
-                onClick={handleNavbar}
-              >
-                PRODUCTS
-              </a>
-            </li>
-            <li className="nav-item">
-              <a href="/ContactUs" className="nav-link" onClick={handleNavbar}>
-                CONTACT US
-              </a>
-            </li>
-            <li className="nav-item">
-              <a href="/Cart" className="nav-link" onClick={handleNavbar}>
-                <FaCartShopping />
-              </a>
-            </li>
+            {!isAdmin ? (
+              <>
+                <li className="nav-item">
+                  <a href="/" className="nav-link" onClick={handleNavbar}>
+                    HOME
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a
+                    href="/ProductCatalogue"
+                    className="nav-link"
+                    onClick={handleNavbar}
+                  >
+                    BOOKS
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a href="/Cart" className="nav-link" onClick={handleNavbar}>
+                    RESERVATION LIST
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a href="/MyRentals" className="nav-link" onClick={handleNavbar}>
+                    MY RESERVATIONS
+                  </a>
+                </li>
+              </>
+            ) : null}
+            {user && (
+              <li className="nav-item">
+                <button
+                  onClick={() => { handleNavbar(); handleLogout(); }}
+                  className="nav-link"
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 'inherit', fontFamily: 'inherit' }}
+                >
+                  LOGOUT
+                </button>
+              </li>
+            )}
           </ul>
         </div>
       </div>

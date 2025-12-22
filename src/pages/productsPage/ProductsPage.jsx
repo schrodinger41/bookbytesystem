@@ -188,7 +188,7 @@ const ProductPage = () => {
         <Header />
         <div className="loading-container-product-page">
           <img src={loadingGif} alt="Loading..." className="loading-gif" />
-          <p className="loading-text">Loading products...</p>
+          <p className="loading-text">Loading books...</p>
         </div>
         <Footer />
       </div>
@@ -217,10 +217,8 @@ const ProductPage = () => {
           <h2>
             {selectedVariant.productName}
           </h2>
-          <p className="productpage-price">
-            {`$${liveData.price?.toFixed(2)}`}
-          </p>
-          <p className="productpage-stock">{`In Stock: ${liveData.stock}`}</p>
+
+          <p className="productpage-stock">{`Available Copies: ${liveData.stock}`}</p>
 
           {!isWholeSet && (
             <div className="variant-buttons">
@@ -291,7 +289,7 @@ const ProductPage = () => {
               setShowAddModal(true);
             }}
           >
-            Add to Cart
+            Reserve Book
           </button>
 
           <div className="productpage-info">
