@@ -6,7 +6,6 @@ import { useAuth } from "../../context/AuthContext";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import EditIcon from "../../images/icon_images/edit.png";
-import imageMap from "../../components/product/ImageMap";
 import "./adminPage.css";
 
 function AdminPage() {
@@ -47,7 +46,7 @@ function AdminPage() {
         fetchedProducts.push({
           id,
           ...data,
-          image: imageMap[data.imageKey] || "",
+          image: "", // ImageMap removed as per request
         });
 
         qtyData[id] = data.quantity ?? 0;
@@ -288,7 +287,7 @@ function AdminPage() {
                                 disabled={!isEditing}
                               />
                             </td>
-                            <td className="adminPage-actions">
+                            <td >
                               {!isEditing ? (
                                 <img
                                   src={EditIcon}

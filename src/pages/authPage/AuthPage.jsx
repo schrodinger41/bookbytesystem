@@ -12,6 +12,7 @@ const AuthPage = () => {
     const [isLogin, setIsLogin] = useState(true);
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -25,6 +26,16 @@ const AuthPage = () => {
             }
         }
     }, [user, isAdmin, authLoading, navigate]);
+
+    // Mouse tracking for interactive background
+    useEffect(() => {
+        const handleMouseMove = (e) => {
+            setMousePosition({ x: e.clientX, y: e.clientY });
+        };
+
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => window.removeEventListener('mousemove', handleMouseMove);
+    }, []);
 
     // Form States
     const [email, setEmail] = useState("");
@@ -102,6 +113,39 @@ const AuthPage = () => {
 
     return (
         <div className="auth-container">
+            {/* Animated Background */}
+            <div className="auth-background">
+                <div
+                    className="bg-circle bg-circle-1"
+                    style={{
+                        transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.02}px)`
+                    }}
+                />
+                <div
+                    className="bg-circle bg-circle-2"
+                    style={{
+                        transform: `translate(${mousePosition.x * -0.015}px, ${mousePosition.y * 0.015}px)`
+                    }}
+                />
+                <div
+                    className="bg-circle bg-circle-3"
+                    style={{
+                        transform: `translate(${mousePosition.x * 0.01}px, ${mousePosition.y * -0.01}px)`
+                    }}
+                />
+                <div
+                    className="bg-circle bg-circle-4"
+                    style={{
+                        transform: `translate(${mousePosition.x * -0.02}px, ${mousePosition.y * -0.015}px)`
+                    }}
+                />
+                <div
+                    className="bg-circle bg-circle-5"
+                    style={{
+                        transform: `translate(${mousePosition.x * 0.025}px, ${mousePosition.y * -0.02}px)`
+                    }}
+                />
+            </div>
             <div className="auth-card">
                 <div className="auth-header">
                     <img src={bookLogo} alt="BookByte" className="auth-logo" />

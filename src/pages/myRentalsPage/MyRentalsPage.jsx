@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { collection, query, where, getDocs, orderBy, updateDoc, doc } from "firebase/firestore";
 import { db } from "../../config/firebase";
 import { useAuth } from "../../context/AuthContext";
@@ -78,7 +79,7 @@ const MyRentalsPage = () => {
                 ) : rentals.length === 0 ? (
                     <div className="no-rentals">
                         <p>You haven't reserved any books yet.</p>
-                        <a href="/ProductCatalogue">Browse Books</a>
+                        <Link to="/ProductCatalogue">Browse Books</Link>
                     </div>
                 ) : (
                     <div className="rentals-list">

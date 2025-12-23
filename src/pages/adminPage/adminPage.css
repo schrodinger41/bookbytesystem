@@ -1,5 +1,5 @@
 .adminPage {
-  background-color: #fce4ec;
+  background-color: #F5F5F5;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -48,8 +48,8 @@
 
 .tab-btn {
   background: white;
-  border: 1px solid #d81b60;
-  color: #d81b60;
+  border: 1px solid black;
+  color: black;
   padding: 10px 20px;
   font-size: 1rem;
   cursor: pointer;
@@ -58,7 +58,7 @@
 }
 
 .tab-btn.active {
-  background: #d81b60;
+  background: black;
   color: white;
 }
 
@@ -73,7 +73,8 @@
 
 .adminPage-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
@@ -88,13 +89,13 @@
 }
 
 .adminPage-table th {
-  background-color: #f8bbd0;
-  color: #880e4f;
+  background-color: black;
+  color: white;
   font-weight: bold;
 }
 
 .adminPage-table tr:hover {
-  background-color: #fce4ec;
+  background-color: #DCDCDC;
 }
 
 .adminPage-quantityInput,
@@ -190,21 +191,22 @@
 
 .table-scroll-container {
   max-height: 450px;
-  /* Approx 8 rows */
   overflow-y: auto;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   background-color: white;
+  position: relative;
 }
 
 .table-scroll-container .adminPage-table {
   box-shadow: none;
-  /* Remove shadow from table as container has it */
   border-radius: 0;
 }
 
 .table-scroll-container thead th {
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 10;
+  background-color: black;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

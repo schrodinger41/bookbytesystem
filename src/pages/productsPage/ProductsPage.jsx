@@ -9,7 +9,7 @@ import Footer from "../../components/footer/Footer";
 import ProductCard from "../../components/product/ProductCard";
 import AddToCartModal from "../../components/modal/AddToCartModal";
 import StockLimitModal from "../../components/modal/StockLimitModal";
-import imageMap from "../../components/product/ImageMap";
+
 import loadingGif from "../../images/loading.gif";
 import "./productsPage.css";
 import "../allProductsPage/allProductsPage.css";

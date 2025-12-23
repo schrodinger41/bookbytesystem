@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../config/firebase";
 import Footer from "../../components/footer/Footer";
@@ -90,9 +90,9 @@ const CartPage = () => {
       <div className="cartPage-container">
         <div className="cartPage-headerRow">
           <h1 className="cartPage-title">Your Reservation List</h1>
-          <a href="/ProductCatalogue" className="cartPage-continueLink">
+          <Link to="/ProductCatalogue" className="cartPage-continueLink">
             Continue Browsing
-          </a>
+          </Link>
         </div>
 
         {cartItems.length === 0 ? (

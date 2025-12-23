@@ -79,55 +79,61 @@ const OrderSummaryModal = ({ cartItems, onClose }) => {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
+        <button className="modal-close" onClick={onClose}>
+          ×
+        </button>
+
         <h2>Reservation Summary</h2>
+
         <div className="modal-body">
-          {/* LEFT: Customer Details */}
-          <div className="modal-left">
+          {/* Customer Details Section */}
+          <div className="customer-section">
             <h3>Customer Details</h3>
             <div className="customer-info-display">
-              <p><strong>Name:</strong> {userData?.fullName}</p>
-              <p><strong>Email:</strong> {user?.email}</p>
-              <p className="info-note" style={{ fontSize: '0.8rem', color: '#666', marginTop: '10px' }}>
-                * Reservation will be linked to this account.
-              </p>
+              <div className="info-row">
+                <span className="info-label">Name:</span>
+                <span className="info-value">{userData?.fullName}</span>
+              </div>
+              <div className="info-row">
+                <span className="info-label">Email:</span>
+                <span className="info-value">{user?.email}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Books Section */}
+          <div className="books-section">
+            <h3>Books to Reserve ({cartItems.reduce((acc, item) => acc + item.quantity, 0)} total)</h3>
+            <div className="books-list">
+              {cartItems.map((item) => (
+                <div key={item.id} className="summary-item">
+                  <img src={item.image} alt={item.name} />
+                  <div className="item-details">
+                    <p className="summary-name">{item.series}</p>
+                    <p className="summary-variant">{item.variant}</p>
+                  </div>
+                  <div className="item-qty">
+                    <span>Qty: {item.quantity}</span>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* RIGHT: Cart Summary + Button + Disclaimer */}
-        <div className="modal-right">
-          {cartItems.map((item) => (
-            <div key={item.id} className="summary-item">
-              <img src={item.image} alt={item.name} />
-              <div>
-                <p className="summary-name">{item.series}</p>
-                <p className="summary-variant">{item.variant}</p>
-              </div>
-              <p className="summary-qty">Qty: {item.quantity}</p>
-            </div>
-          ))}
-
-          <div className="summary-totals" style={{ marginTop: '20px' }}>
-            <div className="summary-row">
-              <h3>Total Books:</h3>
-              <h3>{cartItems.reduce((acc, item) => acc + item.quantity, 0)}</h3>
-            </div>
-          </div>
-
-          <button className="submit-btn" onClick={handleSubmit} disabled={isSubmitting}>
-            {isSubmitting ? "Processing..." : "Confirm Reservation"}
-          </button>
-
+        {/* Footer with buttons */}
+        <div className="modal-footer">
           <p className="disclaimer">
-            Please review your details. By clicking 'Confirm Reservation', you agree to reserve the selected books.
-            You will need to pick them up from the library within the designated timeframe.
+            By confirming, you agree to reserve the selected books and pick them up from the library within the designated timeframe.
           </p>
+          <div className="button-group">
+            
+            <button className="submit-btn" onClick={handleSubmit} disabled={isSubmitting}>
+              {isSubmitting ? "Processing..." : "Confirm Reservation"}
+            </button>
+          </div>
         </div>
       </div>
-
-      <button className="modal-close" onClick={onClose}>
-        ×
-      </button>
     </div>
   );
 };

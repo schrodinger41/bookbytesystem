@@ -3,18 +3,109 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
     padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Animated Background */
+.auth-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.6;
+    animation: float 20s infinite ease-in-out;
+    transition: transform 0.3s ease-out;
+}
+
+.bg-circle-1 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.5) 0%, rgba(59, 130, 246, 0) 70%);
+    top: -10%;
+    left: -10%;
+    animation-delay: 0s;
+}
+
+.bg-circle-2 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.5) 0%, rgba(139, 92, 246, 0) 70%);
+    top: 50%;
+    right: -5%;
+    animation-delay: -5s;
+}
+
+.bg-circle-3 {
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(20, 184, 166, 0.5) 0%, rgba(20, 184, 166, 0) 70%);
+    bottom: -10%;
+    left: 30%;
+    animation-delay: -10s;
+}
+
+.bg-circle-4 {
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, rgba(96, 165, 250, 0.4) 0%, rgba(96, 165, 250, 0) 70%);
+    top: 20%;
+    right: 25%;
+    animation-delay: -15s;
+}
+
+.bg-circle-5 {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.4) 0%, rgba(168, 85, 247, 0) 70%);
+    bottom: 20%;
+    right: 40%;
+    animation-delay: -7s;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    25% {
+        transform: translate(30px, -30px) scale(1.1);
+    }
+
+    50% {
+        transform: translate(-20px, 20px) scale(0.9);
+    }
+
+    75% {
+        transform: translate(20px, 30px) scale(1.05);
+    }
 }
 
 .auth-card {
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
     padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     width: 100%;
     max-width: 450px;
     text-align: center;
+    position: relative;
+    z-index: 1;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .auth-header {
@@ -25,11 +116,13 @@
     width: 60px;
     height: auto;
     margin-bottom: 15px;
+    border-radius: 10px;
 }
 
 .auth-header h2 {
-    color: #880e4f;
+    color: #1a1a2e;
     margin-bottom: 10px;
+    font-size: 1.8rem;
 }
 
 .auth-subtitle {
@@ -62,8 +155,9 @@
 }
 
 .auth-form input:focus {
-    border-color: #d81b60;
+    border-color: #3b82f6;
     outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 .form-row {
@@ -72,7 +166,7 @@
 }
 
 .auth-main-btn {
-    background-color: #d81b60;
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
     color: white;
     padding: 12px;
     border: none;
@@ -80,17 +174,19 @@
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: all 0.3s;
     margin-top: 10px;
 }
 
 .auth-main-btn:hover {
-    background-color: #ad1457;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
 }
 
 .auth-main-btn:disabled {
-    background-color: #f8bbd0;
+    background: #cbd5e1;
     cursor: not-allowed;
+    transform: none;
 }
 
 .auth-divider {
@@ -111,8 +207,7 @@
 }
 
 .auth-divider span {
-    background: white;
-    padding: 0 10px;
+    background: transparent;
     color: #999;
     font-size: 0.85rem;
     position: relative;
@@ -152,7 +247,7 @@
 }
 
 .auth-toggle span {
-    color: #d81b60;
+    color: #3b82f6;
     cursor: pointer;
     font-weight: 600;
     margin-left: 5px;
@@ -160,4 +255,5 @@
 
 .auth-toggle span:hover {
     text-decoration: underline;
+    color: #2563eb;
 }
