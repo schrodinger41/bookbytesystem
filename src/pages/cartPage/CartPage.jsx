@@ -198,9 +198,7 @@ const CartPage = () => {
             </div>
 
             <div className="cartPage-bottom">
-              <div className="cartPage-summary">
-
-              </div>
+              
 
               <button
                 className="cartPage-summaryButton"
