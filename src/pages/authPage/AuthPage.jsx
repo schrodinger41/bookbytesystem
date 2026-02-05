@@ -7,6 +7,46 @@ import { useAuth } from "../../context/AuthContext";
 import "./authPage.css";
 import bookLogo from "../../images/icon.png"; // Assuming this exists based on Header.jsx
 
+// Helper function to convert Firebase error codes to user-friendly messages
+const getErrorMessage = (error) => {
+    const errorCode = error.code;
+
+    switch (errorCode) {
+        // Authentication errors
+        case 'auth/user-not-found':
+            return 'Account does not exist. Please sign up first.';
+        case 'auth/wrong-password':
+            return 'Incorrect password. Please try again.';
+        case 'auth/invalid-email':
+            return 'Invalid email address. Please check and try again.';
+        case 'auth/user-disabled':
+            return 'This account has been disabled. Please contact support.';
+        case 'auth/email-already-in-use':
+            return 'An account with this email already exists. Please sign in instead.';
+        case 'auth/weak-password':
+            return 'Password is too weak. Please use at least 6 characters.';
+        case 'auth/operation-not-allowed':
+            return 'This sign-in method is not enabled. Please contact support.';
+        case 'auth/invalid-credential':
+            return 'Invalid credentials. Please check your email and password.';
+        case 'auth/account-exists-with-different-credential':
+            return 'An account already exists with the same email but different sign-in method.';
+        case 'auth/popup-closed-by-user':
+            return 'Sign-in popup was closed. Please try again.';
+        case 'auth/popup-blocked':
+            return 'Sign-in popup was blocked by your browser. Please allow popups and try again.';
+        case 'auth/network-request-failed':
+            return 'Network error. Please check your internet connection.';
+        case 'auth/too-many-requests':
+            return 'Too many failed attempts. Please try again later.';
+        case 'auth/requires-recent-login':
+            return 'Please sign in again to complete this action.';
+        default:
+            // Return a generic error message for unknown errors
+            return 'An error occurred. Please try again.';
+    }
+};
+
 const AuthPage = () => {
     const { user, isAdmin, loading: authLoading } = useAuth();
     const [isLogin, setIsLogin] = useState(true);
@@ -69,7 +109,7 @@ const AuthPage = () => {
             // navigate("/") - Handled by useEffect
         } catch (error) {
             console.error(error);
-            setErrorMessage(error.message);
+            setErrorMessage(getErrorMessage(error));
         } finally {
             setLoading(false);
         }
@@ -105,7 +145,7 @@ const AuthPage = () => {
             }
         } catch (error) {
             console.error(error);
-            setErrorMessage(error.message);
+            setErrorMessage(getErrorMessage(error));
         } finally {
             setLoading(false);
         }
