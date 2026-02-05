@@ -102,3 +102,19 @@
     background-color: #ccc;
     cursor: not-allowed;
 }
+
+@media (max-width: 600px) {
+    .rental-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .rental-item {
+        max-width: 100%;
+    }
+
+    .myrentals-container {
+        padding: 100px 15px;
+        /* header space */
+    }
+}

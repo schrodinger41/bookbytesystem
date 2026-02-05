@@ -257,3 +257,14 @@
     text-decoration: underline;
     color: #2563eb;
 }
+
+@media (max-width: 480px) {
+    .auth-card {
+        padding: 20px;
+        max-width: 90%;
+    }
+
+    .auth-main-btn {
+        width: 100%;
+    }
+}
